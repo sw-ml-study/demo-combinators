@@ -1,0 +1,54 @@
+# Regression audit for birds first added before callable partials landed.
+# Every multi-argument definition is under-applied, resumed, and checked against
+# its canonical fully saturated result.
+
+include "src/birds.mlpl";
+
+@test {name: "staged foundational bird audit", tags: ["birds", "audit", "partial"]}
+def u:test_staged_foundations() { "Revisit foundational birds under progressive application.";
+  u:assert_eq(call(call(:u:kestrel, 5), 99), 5, "K x then y")?;
+  u:assert_eq(call(call(:u:thrush, 20), :u:increment), 21, "T x then f")?;
+  u:assert_eq(call(call(:u:bluebird, :u:increment), :u:double, 10), 21, "B f then g x")?;
+  u:assert_eq(call(call(:u:cardinal, :u:subtract), 3, 10), 7, "C f then x y")?;
+  u:assert_eq(call(call(:u:vireo, 3), 10, :u:subtract), 0 - 7, "V x then y f")?;
+  u:assert_eq(call(call(:u:warbler, :u:add), 7), 14, "W f then x")?;
+  u:assert_eq(call(call(:u:starling, :u:add), :u:square, 4), 20, "S f then g x")
+}
+
+@test {name: "staged composition bird audit", tags: ["birds", "audit", "partial", "composition"]}
+def u:test_staged_composition() { "Revisit composition and fork families under progressive application.";
+  u:assert_eq(call(call(:u:blackbird, :u:square), :u:add, 2, 3), 25, "B1 f then g x y")?;
+  u:assert_eq(call(call(:u:bunting, :u:double), :u:sum3, 2, 3, 4), 18, "B2 f then g x y z")?;
+  u:assert_eq(call(call(:u:becard, :u:increment), :u:double, :u:square, 3), 19, "B3 f then g h x")?;
+  u:assert_eq(call(call(:u:dove, :u:add), 10, :u:square, 3), 19, "D f then x g y")?;
+  u:assert_eq(call(call(:u:eagle, :u:add), 10, :u:add, 3, 4), 17, "E f then x g y z")?;
+  u:assert_eq(call(call(:u:queer, :u:double), :u:increment, 10), 21, "Q f then g x")?;
+  u:assert_eq(call(call(:u:psi, :u:add), :u:square, 3, 4), 25, "Psi f then g x y")?;
+  u:assert_eq(call(call(:u:phoenix, :u:add), :u:square, :u:double, 3), 15, "Phi f then g h x")
+}
+
+@test {name: "staged permutation bird audit", tags: ["birds", "audit", "partial", "permutation"]}
+def u:test_staged_permutations() { "Revisit self-application, permutation, and duplication birds under progressive application.";
+  u:assert_eq(call(call(:u:lark, :u:increment), :u:callable_kind), 2, "L f then x")?;
+  u:assert_eq(call(call(:u:owl, :u:callable_kind), :u:increment), 1, "O f then g")?;
+  u:assert_eq(call(call(:u:kite, 99), 5), 5, "KI x then y")?;
+  u:assert_eq(call(call(:u:robin, 3), :u:subtract, 10), 7, "R x then f y")?;
+  u:assert_eq(call(call(:u:finch, 3), 10, :u:subtract), 7, "F x then y f")?;
+  u:assert_eq(call(call(:u:goldfinch, :u:subtract), :u:square, 3, 20), 11, "G f then g x y")?;
+  u:assert_eq(call(call(:u:hummingbird, :u:sum3), 2, 5), 9, "H f then x y")?;
+  u:assert_eq(call(call(:u:jay, :u:subtract), 20, 3, 10), 13, "J f then x y z")
+}
+
+@test {name: "staged higher routing bird audit", tags: ["birds", "audit", "partial", "higher-arity"]}
+def u:test_staged_higher_routing() { "Revisit every higher-arity routing bird under progressive application.";
+  u:assert_eq(call(call(:u:violet_starling, :u:add), :u:square, 3), 12, "Sigma f then g x")?;
+  u:assert_eq(call(call(:u:zebra_dove, :u:subtract), :u:square, 3, 4), 5, "Delta f then g x y")?;
+  u:assert_eq(call(call(:u:dickcissel, :u:sum3), 10, 20, :u:square, 3), 39, "D1 f then x y g z")?;
+  u:assert_eq(call(call(:u:dovekie, :u:add), :u:square, 3, :u:double, 4), 17, "D2 f then g x h y")?;
+  u:assert_eq(call(call(:u:eastern_nicator, :u:add), 2, :u:add, 3), 7, "N f then x g y")?;
+  u:assert_eq(call(call(:u:western_nicator, :u:subtract), :u:add, 2, 3), 2, "Nu f then g x y")?;
+  u:assert_eq(call(call(:u:bald_eagle, :u:subtract), :u:add, 2, 3, :u:add, 4, 1), 0, "E-hat f then both branches")
+}
+
+u:run_registered_tests()
+

@@ -1,0 +1,18 @@
+# K is a first-selector, so it behaves as true. K I is a second-selector, so
+# it behaves as false. Selection alone is enough to define not, and, and or.
+include "../src/derived.mlpl";
+
+t = u:church_true();
+f = u:church_false();
+
+print("true chooses the first value:");
+print(u:church_choose(t, 10, 20));
+print("false chooses the second value:");
+print(u:church_choose(f, 10, 20));
+print("not true, true and false, false or true:");
+print([
+  u:church_to_number(u:church_not(t)),
+  u:church_to_number(u:church_and(t, f)),
+  u:church_to_number(u:church_or(f, t))
+])
+

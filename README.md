@@ -58,9 +58,19 @@ The implementation remains deliberately smaller than closures: a partial only
 needs a named reference plus bound values. Anonymous lambdas and captured
 lexical environments are not prerequisites for these demonstrations.
 
+The next lessons use those partials to construct `I = S K K` and
+`B = S (K S) K` as callable values, then encode Boolean selection and
+`not`/`and`/`or` using K and K I. This demonstrates representation and control
+through functions, not just convenient composition syntax.
+
 The maintenance rule remains feature-driven: add and test every bird
 expressible with the released interpreter, and promote a future contract as
 soon as its sw-MLPL semantics ship.
+
+Because partial application changes how every multi-argument definition can
+be observed, [the post-partial audit](docs/bird-audit.md) rechecks all 32
+earlier birds in both saturated and staged forms. New callable features should
+trigger the same whole-aviary review.
 
 ## Run it
 
@@ -93,9 +103,12 @@ the same shared `src/birds.mlpl` definitions as the demos.
 ## Layout
 
 - `src/birds.mlpl` — reusable current bird definitions
+- `src/derived.mlpl` — SK derivations and combinatory Boolean values
 - `demos/` — readable executable tours
 - `lessons/` — numbered path from identity through an array/ML pipeline
 - `tests/` — mlplunit conformance tests
 - `docs/roadmap.md` — staged teaching and language roadmap
 - `docs/capability-matrix.md` — executable current/blocked feature boundary
 - `docs/notation.md` — canonical equations and argument-order policy
+- `docs/derived-combinators.md` — SK construction and encoded logic
+- `docs/bird-audit.md` — canonical and staged review of the whole aviary

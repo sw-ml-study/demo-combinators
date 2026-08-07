@@ -1,0 +1,40 @@
+# Derived callable values built from the S/K basis.
+
+include "birds.mlpl";
+
+def u:derived_identity() { "Return the callable S K K, extensionally equal to I.";
+  call(:u:starling, :u:kestrel, :u:kestrel)
+}
+
+def u:derived_bluebird() { "Return S (K S) K, extensionally equal to B.";
+  k_s = call(:u:kestrel, :u:starling);
+  call(:u:starling, k_s, :u:kestrel)
+}
+
+# K is true: K x y = x. K I is false: K I x y = I y = y.
+def u:church_true() { "Return K, the first selector."; :u:kestrel }
+def u:church_false() { "Return K I, the second selector.";
+  call(:u:kestrel, :u:idiot)
+}
+
+def u:church_choose(predicate, when_true, when_false) {
+  "Select one value by applying a combinatory Boolean.";
+  call(predicate, when_true, when_false)
+}
+
+def u:church_not(predicate) { "not p = p false true.";
+  call(predicate, u:church_false(), u:church_true())
+}
+
+def u:church_and(left, right) { "and p q = p q false.";
+  call(left, right, u:church_false())
+}
+
+def u:church_or(left, right) { "or p q = p true q.";
+  call(left, u:church_true(), right)
+}
+
+def u:church_to_number(predicate) { "Observe a Church Boolean as numeric 1 or 0.";
+  call(predicate, 1, 0)
+}
+

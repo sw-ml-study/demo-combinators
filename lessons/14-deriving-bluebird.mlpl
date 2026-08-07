@@ -1,0 +1,14 @@
+# S and K do more than derive Identity. S (K S) K is Bluebird, constructed
+# here as a callable value and then progressively applied like the named B.
+include "../src/derived.mlpl";
+
+derived_b = u:derived_bluebird();
+after_increment = call(derived_b, :u:increment);
+after_increment_double = call(after_increment, :u:double);
+
+print(repr(derived_b));
+print(repr(after_increment));
+print(repr(after_increment_double));
+print(call(after_increment_double, [1, 2, 3]));
+print(call(:u:bluebird, :u:increment, :u:double, [1, 2, 3]))
+

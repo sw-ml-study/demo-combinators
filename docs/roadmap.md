@@ -25,6 +25,15 @@ excess application, Mockingbird with Identity, and the `S K K` derivation.
 Lessons 12 and 13 teach progressive `K x`, `B f`, and `B f g` values,
 equivalence between one-shot and staged application, and the `S` + `K` basis.
 
+Lessons 14 and 15 construct Bluebird from S and K and encode Boolean selection
+and logic through K/KI. Applicative-order fixed points remain a separate design
+problem; the eager interpreter must not be described as supporting ordinary Y
+unless an executable terminating construction proves it.
+
+The first post-feature audit is complete in `docs/bird-audit.md` and
+`tests/test_staged_audit.mlpl`. Repeat it after any future callable semantic
+change rather than validating only newly added birds.
+
 ## Stage 3: an array-oriented functional toolkit
 
 Compose data preparation and model-facing transformations from named stages.

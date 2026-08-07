@@ -1,0 +1,50 @@
+include "src/derived.mlpl";
+
+@test {name: "SK-derived identity is callable", tags: ["birds", "sk", "derivation"]}
+def u:test_derived_identity() { "Verify the constructed S K K value behaves like named I.";
+  derived_i = u:derived_identity();
+  u:assert_eq(call(derived_i, 42), 42, "derived I handles a scalar")?;
+  u:assert_eq(call(derived_i, [1, 2, 3]), [1, 2, 3], "derived I handles an array")?;
+  u:assert_eq(call(derived_i, :u:double), :u:double, "derived I preserves a function reference")
+}
+
+@test {name: "SK-derived Bluebird is callable", tags: ["birds", "sk", "derivation", "composition"]}
+def u:test_derived_bluebird() { "Verify S (K S) K composes functions like B.";
+  derived_b = u:derived_bluebird();
+  staged = call(call(derived_b, :u:increment), :u:double);
+  u:assert_eq(call(staged, 10), 21, "derived B stages composition")?;
+  u:assert_eq(call(derived_b, :u:increment, :u:double, [1, 2, 3]), [3, 5, 7], "derived B handles arrays")?;
+  u:assert_eq(
+    call(derived_b, :u:increment, :u:double, [1, 2, 3]),
+    call(:u:bluebird, :u:increment, :u:double, [1, 2, 3]),
+    "derived and named B agree"
+  )
+}
+
+@test {name: "K and KI encode Boolean selection", tags: ["birds", "logic", "church"]}
+def u:test_church_selection() { "Verify K selects first and K I selects second.";
+  truth = u:church_true();
+  falsehood = u:church_false();
+  u:assert_eq(u:church_choose(truth, 10, 20), 10, "true selects first")?;
+  u:assert_eq(u:church_choose(falsehood, 10, 20), 20, "false selects second")?;
+  u:assert_eq(u:church_to_number(truth), 1, "true observes as one")?;
+  u:assert_eq(u:church_to_number(falsehood), 0, "false observes as zero")
+}
+
+@test {name: "combinatory Boolean algebra", tags: ["birds", "logic", "church"]}
+def u:test_church_logic() { "Verify not, and, and or across all Boolean inputs.";
+  t = u:church_true(); f = u:church_false();
+  u:assert_eq(u:church_to_number(u:church_not(t)), 0, "not true")?;
+  u:assert_eq(u:church_to_number(u:church_not(f)), 1, "not false")?;
+  u:assert_eq(u:church_to_number(u:church_and(t, t)), 1, "true and true")?;
+  u:assert_eq(u:church_to_number(u:church_and(t, f)), 0, "true and false")?;
+  u:assert_eq(u:church_to_number(u:church_and(f, t)), 0, "false and true")?;
+  u:assert_eq(u:church_to_number(u:church_and(f, f)), 0, "false and false")?;
+  u:assert_eq(u:church_to_number(u:church_or(t, t)), 1, "true or true")?;
+  u:assert_eq(u:church_to_number(u:church_or(t, f)), 1, "true or false")?;
+  u:assert_eq(u:church_to_number(u:church_or(f, t)), 1, "false or true")?;
+  u:assert_eq(u:church_to_number(u:church_or(f, f)), 0, "false or false")
+}
+
+u:run_registered_tests()
+
