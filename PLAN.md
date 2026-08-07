@@ -36,11 +36,11 @@ ordinary arithmetic into birds merely to increase bird counts. Each demo must:
 
 ## Feature-sensitive horizon
 
-Applicative-order fixed points and recursion-without-named-recursion remain
-research items, not promised demos. Add them only after a terminating eager
-construction is executable and tested. Future callable changes trigger the
-whole-aviary audit described in `docs/bird-audit.md` before practical examples
-depend on them.
+The classical Sage `Y = B M L` is now constructed but deliberately not forced.
+An applicative-order Sage uses named partials to delay self-application and is
+executable for factorial and Fibonacci without named recursion. Future
+callable changes still trigger the whole-aviary audit described in
+`docs/bird-audit.md` before practical examples depend on them.
 
 The sw-MLPL combinator design promises partial support across all
 function-consuming HOFs, but the current interpreter still rejects partials in

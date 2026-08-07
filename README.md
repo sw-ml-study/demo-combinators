@@ -63,6 +63,11 @@ The next lessons use those partials to construct `I = S K K` and
 `not`/`and`/`or` using K and K I. This demonstrates representation and control
 through functions, not just convenient composition syntax.
 
+Lesson 17 reaches the Sage bird. It constructs the classical `Y = B M L`
+without forcing its eager divergence, then implements an applicative-order
+Sage using named partials and runs factorial and Fibonacci bodies that never
+refer to their own names.
+
 ## Practical problems
 
 The conceptual aviary is paired with a demo-algorithms-style problem corpus.
@@ -119,6 +124,7 @@ the same shared `src/birds.mlpl` definitions as the demos.
 
 - `src/birds.mlpl` — reusable current bird definitions
 - `src/derived.mlpl` — SK derivations and combinatory Boolean values
+- `src/fixed_points.mlpl` — classical Sage construction and eager-safe fixed points
 - `src/problems/` — reusable practical problem implementations
 - `demos/` — readable executable tours
 - `demos/problems/` — standalone problem-solving applications
@@ -130,4 +136,5 @@ the same shared `src/birds.mlpl` definitions as the demos.
 - `docs/capability-matrix.md` — executable current/blocked feature boundary
 - `docs/notation.md` — canonical equations and argument-order policy
 - `docs/derived-combinators.md` — SK construction and encoded logic
+- `docs/sage-fixed-points.md` — Y versus applicative Z and recursive examples
 - `docs/bird-audit.md` — canonical and staged review of the whole aviary

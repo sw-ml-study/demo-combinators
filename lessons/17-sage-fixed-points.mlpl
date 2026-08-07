@@ -1,0 +1,17 @@
+# A Sage produces a fixed point: Y f = f (Y f). Smullyan's classical Sage is
+# B M L, but forcing it diverges in an eager evaluator. The applicative Sage
+# delays self-application behind a unary named partial, like the Z combinator.
+
+include "../src/fixed_points.mlpl";
+
+classical = u:classical_sage();
+fact = u:factorial();
+fib = u:fibonacci();
+
+print("Classical Sage Y = B M L (constructed, deliberately not forced):");
+print(repr(classical));
+print("Applicative Sage factorial(6):");
+print(call(fact, 6));
+print("Applicative Sage fibonacci(8):");
+print(call(fib, 8))
+

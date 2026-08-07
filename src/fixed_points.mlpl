@@ -1,0 +1,45 @@
+# Fixed-point birds for sw-MLPL's eager evaluator.
+
+include "birds.mlpl";
+
+def u:classical_sage() { "Return the classical Sage Y = B M L as a callable value.";
+  call(:u:bluebird, :u:mockingbird, :u:lark)
+}
+
+# Applicative-order fixed point (Z). A named partial supplies the delay that a
+# lambda-calculus presentation writes as `lambda value. x x value`.
+def u:z_recur(step, value) { "Resume one delayed recursive application.";
+  call(step, step, value)
+}
+
+def u:z_step(builder, step) { "Give a builder a delayed recursive callable.";
+  recursive_call = call(:u:z_recur, step);
+  call(builder, recursive_call)
+}
+
+def u:applicative_sage(builder) { "Return the eager-safe fixed point of builder.";
+  step = call(:u:z_step, builder);
+  call(step, step)
+}
+
+# Recursive bodies receive recursion explicitly instead of naming themselves.
+def u:factorial_body(recur, n) {
+  if eq(n, 0) { 1 } else { n * call(recur, n - 1) }
+}
+
+def u:fibonacci_body(recur, n) {
+  if gt(2, n) {
+    n
+  } else {
+    call(recur, n - 1) + call(recur, n - 2)
+  }
+}
+
+def u:factorial() { "Return factorial as an applicative fixed-point callable.";
+  u:applicative_sage(:u:factorial_body)
+}
+
+def u:fibonacci() { "Return Fibonacci as an applicative fixed-point callable.";
+  u:applicative_sage(:u:fibonacci_body)
+}
+

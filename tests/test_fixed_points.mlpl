@@ -1,0 +1,28 @@
+include "src/fixed_points.mlpl";
+
+@test {name: "classical Sage is constructed but not forced", tags: ["birds", "sage", "fixed-point"]}
+def u:test_classical_sage_value() { "Verify B M L forms a stable callable without triggering eager divergence.";
+  sage = u:classical_sage();
+  u:assert_eq(equal(sage, call(:u:bluebird, :u:mockingbird, :u:lark)), 1, "Y is B M L")?;
+  u:assert_eq(repr(sage), "partial(:u:bluebird, 2 of 3 bound)", "classical Sage remains an unforced callable")
+}
+
+@test {name: "applicative Sage computes factorial", tags: ["birds", "sage", "fixed-point", "recursion"]}
+def u:test_applicative_factorial() { "Verify a delayed recursive partial terminates under eager evaluation.";
+  fact = u:factorial();
+  u:assert_eq(call(fact, 0), 1, "factorial base case")?;
+  u:assert_eq(call(fact, 1), 1, "factorial one")?;
+  u:assert_eq(call(fact, 5), 120, "factorial five")?;
+  u:assert_eq(call(fact, 7), 5040, "factorial seven")
+}
+
+@test {name: "applicative Sage supports branching recursion", tags: ["birds", "sage", "fixed-point", "recursion"]}
+def u:test_applicative_fibonacci() { "Verify the recursive callable can be invoked more than once per step.";
+  fib = u:fibonacci();
+  u:assert_eq(call(fib, 0), 0, "fibonacci zero")?;
+  u:assert_eq(call(fib, 1), 1, "fibonacci one")?;
+  u:assert_eq(call(fib, 8), 21, "fibonacci eight")
+}
+
+u:run_registered_tests()
+
