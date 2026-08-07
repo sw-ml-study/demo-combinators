@@ -1,0 +1,6 @@
+# C, W, and S rearrange, duplicate, and share arguments.
+include "../src/birds.mlpl";
+print(u:cardinal(:u:subtract, 3, 10));
+print(u:warbler(:u:add, 7));
+print(u:starling(:u:add, :u:square, 4))
+

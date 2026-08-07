@@ -1,0 +1,24 @@
+# A practical composition story: center a feature vector, apply a fixed affine
+# transform, apply ReLU, then threshold it into numeric class decisions.
+# Becard composes the first three named stages; Bluebird attaches the final
+# classifier. No model DSL or closure machinery is needed.
+
+include "../src/birds.mlpl";
+
+features = [1, 2, 3];
+centered = u:center_features(features);
+transformed = u:affine_features(centered);
+activated = u:relu_features(transformed);
+classes = u:feature_pipeline(features);
+
+print("Features:");
+print(features);
+print("Centered:");
+print(centered);
+print("Affine transform:");
+print(transformed);
+print("ReLU:");
+print(activated);
+print("B/B3-composed class decisions:");
+print(classes)
+

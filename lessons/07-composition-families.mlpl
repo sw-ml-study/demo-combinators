@@ -1,0 +1,6 @@
+# Larger bluebirds compose over multi-argument functions and longer pipelines.
+include "../src/birds.mlpl";
+print(u:blackbird(:u:square, :u:add, 2, 3));
+print(u:bunting(:u:double, :u:sum3, 2, 3, 4));
+print(u:becard(:u:increment, :u:double, :u:square, 3))
+

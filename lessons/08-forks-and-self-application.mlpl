@@ -1,0 +1,7 @@
+# Psi/Phoenix fork data; Lark/Owl nest application and self-application.
+include "../src/birds.mlpl";
+print(u:psi(:u:add, :u:square, 3, 4));
+print(u:phoenix(:u:add, :u:square, :u:double, [1, 2, 3]));
+print(u:lark(:u:increment, :u:callable_kind));
+print(u:owl(:u:callable_kind, :u:increment))
+

@@ -1,0 +1,16 @@
+#!/bin/sh
+set -eu
+
+repo_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+mlpl=${MLPL:-"$repo_root/../sw-mlpl/target/release/mlpl-repl"}
+
+if [ ! -x "$mlpl" ]; then
+  echo "mlpl-repl is not executable: $mlpl" >&2
+  exit 1
+fi
+
+for lesson in "$repo_root"/lessons/*.mlpl; do
+  echo "==> ${lesson##*/}"
+  "$mlpl" --source-dir "$repo_root" "$lesson"
+done
+

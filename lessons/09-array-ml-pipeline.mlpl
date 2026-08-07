@@ -1,0 +1,4 @@
+# Apply the same function wiring to a practical feature-vector transformation.
+include "../src/birds.mlpl";
+print(u:feature_pipeline([1, 2, 3]))
+

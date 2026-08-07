@@ -6,6 +6,10 @@ Teach explicit function references, `call`, self-application, argument
 permutation and duplication, full-arity bird equations, `atop`, and the
 interaction between composition and pervasive array arithmetic.
 
+The numbered `lessons/` sequence is the primary reading path. The broader
+`demos/` scripts are standalone showcases, including a practical feature
+pipeline composed with Bluebird and Becard.
+
 New birds belong in this stage whenever their equations can be written and
 tested using exact-arity named functions and current callable references. Do
 not hold such birds behind the partial-application milestone.

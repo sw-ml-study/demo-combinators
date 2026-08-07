@@ -1,0 +1,4 @@
+# T x f = f x: data can be routed into a function supplied as a value.
+include "../src/birds.mlpl";
+print(u:thrush(20, :u:increment))
+

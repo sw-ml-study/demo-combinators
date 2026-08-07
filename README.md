@@ -23,9 +23,9 @@ invocation with `call(f, args...)`. The executable aviary demonstrates:
 | Mockingbird / M | `M f = f f` | self-application |
 
 The extended current suite also includes Blackbird (`B1`), Bunting (`B2`),
-Becard (`B3`), Dove (`D`), Eagle (`E`), Queer (`Q`), Psi (`Ψ`), and Phoenix
-(`Φ`). These exercise multi-argument composition, routing, mapping one
-function over two inputs, and forking one input through parallel stages.
+Becard (`B3`), Dove (`D`), Eagle (`E`), Queer (`Q`), Psi (`Ψ`), Phoenix
+(`Φ`), Lark (`L`), and Owl (`O`). These exercise multi-argument composition,
+routing, shared mapping, forking, nested application, and self-application.
 
 The Bluebird examples apply unchanged to scalars and arrays. That is the
 distinctly sw-MLPL lesson: combinators organize computations, while pervasive
@@ -74,7 +74,9 @@ cd ../sw-mlpl
 cargo build --manifest-path components/cli/Cargo.toml -p mlpl-repl --release
 cd ../demo-combinators
 ./scripts/run-demos
+./scripts/run-lessons
 ./scripts/run-tests
+./scripts/check-acceptance-gates
 ```
 
 Override either tool path with `MLPL=/path/to/mlpl-repl` or
@@ -85,6 +87,7 @@ the same shared `src/birds.mlpl` definitions as the demos.
 
 - `src/birds.mlpl` — reusable current bird definitions
 - `demos/` — readable executable tours
+- `lessons/` — numbered path from identity through an array/ML pipeline
 - `tests/` — mlplunit conformance tests
 - `acceptance/` — future language-feature contracts, excluded from discovery
 - `docs/roadmap.md` — staged teaching and language roadmap

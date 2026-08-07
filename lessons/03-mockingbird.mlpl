@@ -1,0 +1,4 @@
+# M f = f f: named references make self-application observable today.
+include "../src/birds.mlpl";
+print(u:mockingbird(:u:callable_kind))
+

@@ -1,0 +1,4 @@
+# B f g x = f(g(x)): composition is unchanged when x becomes an array.
+include "../src/birds.mlpl";
+print(u:bluebird(:u:increment, :u:double, [1, 2, 3]))
+

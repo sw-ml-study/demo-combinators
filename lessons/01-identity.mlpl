@@ -1,0 +1,4 @@
+# I x = x: begin with the smallest bird and observe rank-polymorphic identity.
+include "../src/birds.mlpl";
+print(u:idiot([1, 2, 3]))
+

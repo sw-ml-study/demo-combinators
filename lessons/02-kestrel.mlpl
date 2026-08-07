@@ -1,0 +1,4 @@
+# K x y = x: selection can itself be expressed as a function.
+include "../src/birds.mlpl";
+print(u:kestrel(42, 999))
+

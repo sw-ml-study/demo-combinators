@@ -7,7 +7,7 @@ of a bird.
 |---|---:|---|
 | Named user functions as values | yes | every `:u:` argument in `src/birds.mlpl` |
 | Uniform higher-order invocation | yes | `call` throughout the current aviary |
-| Functions passed and returned as named references | yes | Mockingbird reference test |
+| Functions passed as named references | yes | Mockingbird, Lark, and Owl tests |
 | Exact-arity composition | yes | B, B1, B2, B3, Q |
 | Argument duplication and routing | yes | W, S, D, E, Psi, Phi |
 | Pervasive array behavior | yes | B and Phi vector tests |
@@ -24,4 +24,3 @@ or equation that only needs current exact-arity calls belongs there now. An
 acceptance fixture moves into `tests/` only after its required language
 semantics ship; at that point its demo should emphasize the newly observable
 intermediate callable values.
-

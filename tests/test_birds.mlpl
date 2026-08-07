@@ -54,4 +54,16 @@ def u:test_derived_equations() { "Verify selected birds are equivalent wiring de
   )
 }
 
+@test {name: "nested self application birds", tags: ["birds", "self-application", "current"]}
+def u:test_nested_self_application() { "Verify Lark and Owl at full arity on current sw-MLPL.";
+  u:assert_eq(u:lark(:u:increment, :u:callable_kind), 2, "L applies x to itself before f")?;
+  u:assert_eq(u:owl(:u:callable_kind, :u:increment), 1, "O feeds f(g) into g")
+}
+
+@test {name: "bird-composed feature pipeline", tags: ["birds", "arrays", "ml", "current"]}
+def u:test_feature_pipeline() { "Verify a four-stage array transformation assembled with B and B3.";
+  u:assert_eq(u:center_features([1, 2, 3]), [0 - 1, 0, 1], "centering stage")?;
+  u:assert_eq(u:feature_pipeline([1, 2, 3]), [0, 0, 1], "composed feature classification")
+}
+
 u:run_registered_tests()
