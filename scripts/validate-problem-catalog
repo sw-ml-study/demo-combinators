@@ -26,3 +26,31 @@ awk -F '\t' -v root="$repo_root" '
 ' "$catalog"
 
 echo "validated practical problem catalog"
+
+# Completeness: every practical demo and test must be cataloged, and every
+# runnable pair must include shared production source rather than duplicate it.
+for path in "$repo_root"/demos/problems/*.mlpl; do
+  rel=${path#"$repo_root/"}
+  if ! rg -F "$rel" "$catalog" >/dev/null; then
+    echo "uncataloged practical demo: $rel" >&2
+    exit 1
+  fi
+  if ! rg -F 'include "../../src/problems/' "$path" >/dev/null; then
+    echo "practical demo does not include shared source: $rel" >&2
+    exit 1
+  fi
+done
+
+for path in "$repo_root"/tests/problems/*.mlpl; do
+  rel=${path#"$repo_root/"}
+  if ! rg -F "$rel" "$catalog" >/dev/null; then
+    echo "uncataloged practical test: $rel" >&2
+    exit 1
+  fi
+  if ! rg -F 'include "src/problems/' "$path" >/dev/null; then
+    echo "practical test does not include shared source: $rel" >&2
+    exit 1
+  fi
+done
+
+echo "validated practical catalog completeness and shared-source adoption"

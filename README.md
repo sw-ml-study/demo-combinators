@@ -5,6 +5,11 @@ Mockingbird*, implemented in [sw-MLPL](https://github.com/sw-ml-study/sw-mlpl).
 The project uses the birds to show that sw-MLPL is a general-purpose,
 higher-order programming language as well as an array-oriented ML language.
 
+Status: v0.1.0 release baseline. See [RELEASE_STATUS.md](RELEASE_STATUS.md) for
+the verified toolchain and gate, and
+[planned follow-ons](docs/planned-follow-ons.md) for optional second-milestone
+expansion.
+
 ## What works now
 
 sw-MLPL 0.20.0 has named user-function values (`:u:name`) and uniform
@@ -144,4 +149,5 @@ the same shared `src/birds.mlpl` definitions as the demos.
 - `docs/notation.md` — canonical equations and argument-order policy
 - `docs/derived-combinators.md` — SK construction and encoded logic
 - `docs/sage-fixed-points.md` — Y versus applicative Z and recursive examples
+- `docs/planned-follow-ons.md` — post-v0.1.0 practical and conceptual expansion
 - `docs/bird-audit.md` — canonical and staged review of the whole aviary

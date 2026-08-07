@@ -1,0 +1,43 @@
+name: check
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  suite:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out demo-combinators
+        uses: actions/checkout@v4
+        with:
+          path: demo-combinators
+
+      - name: Check out sw-MLPL
+        uses: actions/checkout@v4
+        with:
+          repository: sw-ml-study/sw-mlpl
+          path: sw-mlpl
+
+      - name: Check out mlplunit
+        uses: actions/checkout@v4
+        with:
+          repository: softwarewrighter/mlplunit
+          path: mlplunit
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build release interpreter
+        run: cargo build --manifest-path sw-mlpl/components/cli/Cargo.toml -p mlpl-repl --release
+
+      - name: Run complete project gate
+        working-directory: demo-combinators
+        env:
+          MLPL: ${{ github.workspace }}/sw-mlpl/target/release/mlpl-repl
+          MLPLUNIT: ${{ github.workspace }}/mlplunit/bin/mlplunit
+        run: ./scripts/check
+
