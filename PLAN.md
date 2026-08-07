@@ -28,8 +28,8 @@ ordinary arithmetic into birds merely to increase bird counts. Each demo must:
 | 3 | Loan/application policy selection | K/KI, C, Partial | explicit policy selection without hidden closure state | planned |
 | 4 | Feature-quality report | Phi, over, Partial | fork one dataset into quality metrics and combine | planned |
 | 5 | Batch normalization pipeline | B/B3, each, Partial | configured transforms over rank-polymorphic data | planned |
-| 6 | Validation and recovery workflow | Result HOFs, Partial | configured success/error handlers | gated: partial rejected |
-| 7 | Managed resource workflow | bracket, Partial | configured use/teardown hooks | gated: partial rejected |
+| 6 | Validation and recovery workflow | Result HOFs, Partial | configured success/error handlers | runnable |
+| 7 | Managed resource workflow | bracket, Partial | configured use/teardown hooks | runnable |
 | 8 | Pairwise compatibility matrix | table, Partial | bind scoring weights then form an outer table | runnable |
 | 9 | Ensemble score fusion | Psi/Phi/Bald Eagle | parallel branches and explicit fusion | planned |
 | 10 | Callable strategy registry | records, Partial, T/V | select and invoke named configured policies | planned |
@@ -42,7 +42,7 @@ executable for factorial and Fibonacci without named recursion. Future
 callable changes still trigger the whole-aviary audit described in
 `docs/bird-audit.md` before practical examples depend on them.
 
-The sw-MLPL combinator design promises partial support across all
-function-consuming HOFs, but the current interpreter still rejects partials in
-Result combinators and `bracket`. Exact fixtures under `acceptance/` keep those
-two roadmap items visible and automatically signal when they can be promoted.
+The callable surface is now complete for the planned examples: Result
+combinators accept partial policies, while `bracket` accepts partial use and
+teardown hooks. Setup deliberately remains a raw zero-argument user reference
+because zero-argument partial semantics are not defined.

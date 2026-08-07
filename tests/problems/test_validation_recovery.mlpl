@@ -1,0 +1,13 @@
+include "src/problems/validation_recovery.mlpl";
+
+@test {name: "accepted configured service quote", tags: ["problem", "result", "partial", "workflow"]}
+def u:test_accepted_service_quote() { "Verify the success rail executes markup and fee policies.";
+  u:assert_eq(u:validated_service_quote(50, 0.25, 50, 5, 100), ok(130), "accepted quote")
+}
+
+@test {name: "recovered configured service quote", tags: ["problem", "result", "partial", "workflow"]}
+def u:test_recovered_service_quote() { "Verify the error rail bypasses markup and uses configured fallback.";
+  u:assert_eq(u:validated_service_quote(50, 0.25, 50, 5, 20), ok(55), "recovered quote")
+}
+
+u:run_registered_tests()

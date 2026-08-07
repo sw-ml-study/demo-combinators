@@ -1,0 +1,13 @@
+include "src/problems/managed_session.mlpl";
+
+@test {name: "configured managed session succeeds", tags: ["problem", "bracket", "partial", "lifecycle"]}
+def u:test_managed_session_success() { "Verify partial use and teardown hooks preserve a successful primary result.";
+  u:assert_eq(u:run_managed_session(3, 7), ok(21), "managed session result")
+}
+
+@test {name: "configured teardown failure surfaces", tags: ["problem", "bracket", "partial", "lifecycle"]}
+def u:test_managed_session_cleanup_failure() { "Verify guaranteed teardown runs and its failure is observable.";
+  u:assert_eq(u:run_managed_session(3, 99), err(7), "teardown mismatch must fail")
+}
+
+u:run_registered_tests()

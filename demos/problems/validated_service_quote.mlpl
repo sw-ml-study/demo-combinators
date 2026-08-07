@@ -1,0 +1,11 @@
+# Problem: reject undersized service requests, mark up accepted amounts,
+# recover rejected requests to a safe fallback, and add a service fee.
+# Each policy is a partial consumed by a Result combinator.
+
+include "../../src/problems/validation_recovery.mlpl";
+
+accepted = u:validated_service_quote(50, 0.25, 50, 5, 100);
+recovered = u:validated_service_quote(50, 0.25, 50, 5, 20);
+print("Accepted 100 request after markup and fee:"); print(accepted);
+print("Rejected 20 request after fallback and fee:"); print(recovered);
+{accepted: accepted, recovered: recovered}

@@ -1,5 +1,11 @@
 include "src/birds.mlpl";
 
+def u:add_then_ok(offset, x) { ok(offset + x) }
+def u:recover_then_ok(offset, error_value) { ok(offset + error_value) }
+def u:setup_five() { 5 }
+def u:use_with_offset(offset, fixture) { ok(offset + fixture) }
+def u:teardown_with_marker(marker, fixture) { marker + fixture; ok(1) }
+
 @test {name: "partials compose with array HOFs", tags: ["partial", "hof", "arrays"]}
 def u:test_partial_array_hofs() { "Verify each, table, atop, and over accept appropriately saturated partial callables.";
   add5 = call(:u:add, 5);
@@ -8,6 +14,26 @@ def u:test_partial_array_hofs() { "Verify each, table, atop, and over accept app
   u:assert_eq(table(sum_from_10, [1, 2], [3, 4]), reshape([14, 15, 15, 16], [2, 2]), "table accepts binary partial")?;
   u:assert_eq(atop(add5, :u:square, 3), 14, "atop accepts outer partial")?;
   u:assert_eq(over(sum_from_10, :u:square, 3, 4), 35, "over accepts binary outer partial")
+}
+
+@test {name: "partials compose with Result combinators", tags: ["partial", "hof", "result"]}
+def u:test_partial_result_hofs() { "Verify map_ok, and_then, and or_else accept partial callables.";
+  add5 = call(:u:add, 5);
+  then10 = call(:u:add_then_ok, 10);
+  recover20 = call(:u:recover_then_ok, 20);
+  u:assert_eq(map_ok(add5, ok(3)), ok(8), "map_ok accepts partial")?;
+  u:assert_eq(map_ok(add5, err(3)), err(3), "map_ok preserves error")?;
+  u:assert_eq(and_then(then10, ok(3)), ok(13), "and_then accepts partial")?;
+  u:assert_eq(and_then(then10, err(3)), err(3), "and_then preserves error")?;
+  u:assert_eq(or_else(recover20, err(3)), ok(23), "or_else accepts partial")?;
+  u:assert_eq(or_else(recover20, ok(3)), ok(3), "or_else preserves success")
+}
+
+@test {name: "partials compose with bracket hooks", tags: ["partial", "hof", "bracket"]}
+def u:test_partial_bracket_hooks() { "Verify partial use and teardown hooks retain bound configuration.";
+  use10 = call(:u:use_with_offset, 10);
+  teardown100 = call(:u:teardown_with_marker, 100);
+  u:assert_eq(bracket(:u:setup_five, use10, teardown100), ok(15), "bracket accepts partial hooks")
 }
 
 u:run_registered_tests()

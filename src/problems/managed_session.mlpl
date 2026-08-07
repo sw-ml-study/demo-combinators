@@ -1,0 +1,15 @@
+include "../birds.mlpl";
+
+def u:open_session() { 7 }
+def u:process_session(multiplier, token) { ok(multiplier * token) }
+def u:close_session(expected_token, token) {
+  if equal(expected_token, token) { ok(1) } else { err(token) }
+}
+
+def u:run_managed_session(multiplier, expected_token) {
+  "Run configured use and cleanup hooks around one acquired session token.";
+  use_hook = call(:u:process_session, multiplier);
+  teardown_hook = call(:u:close_session, expected_token);
+  bracket(:u:open_session, use_hook, teardown_hook)
+}
+

@@ -1,0 +1,21 @@
+include "../birds.mlpl";
+
+def u:validate_minimum(minimum, amount) {
+  if gt(minimum, amount) { err(amount) } else { ok(amount) }
+}
+
+def u:apply_markup(rate, amount) { ok(amount * (1 + rate)) }
+def u:recover_fallback(fallback, rejected_amount) { rejected_amount; ok(fallback) }
+
+def u:validated_service_quote(minimum, markup_rate, fallback, service_fee, amount) {
+  "Run configured validation, transformation, recovery, and success mapping.";
+  validator = call(:u:validate_minimum, minimum);
+  markup = call(:u:apply_markup, markup_rate);
+  recovery = call(:u:recover_fallback, fallback);
+  add_fee = call(:u:add, service_fee);
+  validated = call(validator, amount);
+  marked_up = and_then(markup, validated);
+  recovered = or_else(recovery, marked_up);
+  map_ok(add_fee, recovered)
+}
+

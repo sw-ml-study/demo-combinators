@@ -1,0 +1,11 @@
+# Problem: acquire a processing-session token, use it with configured policy,
+# and validate it during guaranteed teardown. Cleanup failure remains visible.
+
+include "../../src/problems/managed_session.mlpl";
+
+success = u:run_managed_session(3, 7);
+cleanup_failure = u:run_managed_session(3, 99);
+print("Successful managed session:"); print(success);
+print("Successful use followed by teardown validation failure:"); print(cleanup_failure);
+{success: success, cleanup_failure: cleanup_failure}
+

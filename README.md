@@ -81,14 +81,18 @@ The corpus also includes configured sensor calibration/alarm scoring with Psi
 and Blackbird, plus a worker/job compatibility matrix built by passing a bound
 binary scoring policy directly to `table`.
 
+The completed HOF surface additionally supports a configured validation and
+recovery railway plus a managed processing session whose partial use and
+teardown hooks run under `bracket` lifecycle guarantees.
+
 The maintenance rule remains feature-driven: add and test every bird
 expressible with the released interpreter, and promote a future contract as
 soon as its sw-MLPL semantics ship.
 
-Current HOF interoperability is deliberately reported precisely: partials
-work with `each`, `table`, `atop`, and `over`; Result combinators and `bracket`
-still reject them despite being included in the upstream design. Executable
-fixtures under `acceptance/` track those remaining gaps.
+Current HOF interoperability includes `each`, `table`, `atop`, `over`, the
+Result combinators, and partial `bracket` use/teardown hooks. Bracket setup
+deliberately stays a raw zero-argument user reference because zero-argument
+partial semantics are not defined.
 
 Because partial application changes how every multi-argument definition can
 be observed, [the post-partial audit](docs/bird-audit.md) rechecks all 32
@@ -135,7 +139,6 @@ the same shared `src/birds.mlpl` definitions as the demos.
 - `lessons/` — numbered path from identity through an array/ML pipeline
 - `tests/` — mlplunit conformance tests
 - `catalog/` — validated bird and practical-problem metadata
-- `acceptance/` — exact upstream feature gates excluded from green discovery
 - `docs/roadmap.md` — staged teaching and language roadmap
 - `docs/capability-matrix.md` — executable current/blocked feature boundary
 - `docs/notation.md` — canonical equations and argument-order policy
