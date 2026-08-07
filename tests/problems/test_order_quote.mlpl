@@ -1,0 +1,21 @@
+include "src/problems/order_quote.mlpl";
+
+@test {name: "regional order quote composition", tags: ["problem", "pricing", "birds", "partial"]}
+def u:test_regional_quote() { "Verify Bluebird, partial tax policy, and Phoenix compute an auditable quote.";
+  quote = u:regional_order_quote(100, 0.08);
+  u:assert_eq(quote.discounted_subtotal, 90, "ten percent discount")?;
+  u:assert_eq(quote.service_fee, 5, "fixed service fee")?;
+  u:assert_eq(quote.tax, 8, "configured regional tax")?;
+  u:assert_eq(quote.total, 103, "combined quote total")
+}
+
+@test {name: "regional order quote batch", tags: ["problem", "pricing", "birds", "arrays"]}
+def u:test_regional_quote_batch() { "Verify identical bird wiring pervades a batch of subtotals.";
+  quote = u:regional_order_quote([100, 50, 200], 0.08);
+  u:assert_eq(quote.discounted_subtotal, [90, 45, 180], "batch discounts")?;
+  u:assert_eq(quote.tax, [8, 4, 16], "batch tax")?;
+  u:assert_eq(quote.total, [103, 54, 201], "batch totals")
+}
+
+u:run_registered_tests()
+

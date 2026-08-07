@@ -1,0 +1,34 @@
+# Practical problem: compute regional order quotes by composing a shared
+# discount/service branch with a partially configured tax branch.
+
+include "../birds.mlpl";
+
+def u:discounted_subtotal(subtotal) { subtotal * 0.9 }
+def u:add_service_fee(subtotal) { subtotal + 5 }
+def u:tax_amount(rate, subtotal) { rate * subtotal }
+
+def u:discounted_with_service(subtotal) {
+  "Apply discount, then add the service fee through Bluebird composition.";
+  call(:u:bluebird, :u:add_service_fee, :u:discounted_subtotal, subtotal)
+}
+
+def u:regional_order_quote(subtotal, tax_rate) {
+  "Return a quote whose two price branches are combined by Phoenix.";
+  tax_policy = call(:u:tax_amount, tax_rate);
+  total = call(
+    :u:phoenix,
+    :u:add,
+    :u:discounted_with_service,
+    tax_policy,
+    subtotal
+  );
+  {
+    subtotal: subtotal,
+    tax_rate: tax_rate,
+    discounted_subtotal: u:discounted_subtotal(subtotal),
+    service_fee: subtotal * 0 + 5,
+    tax: call(tax_policy, subtotal),
+    total: total
+  }
+}
+

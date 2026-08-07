@@ -1,0 +1,3 @@
+id	path	test	problem	birds	data_shape	status
+regional-order-quote	demos/problems/regional_order_quote.mlpl	tests/problems/test_order_quote.mlpl	regional pricing with discount fee and configured tax	B+Phi+Partial	scalar-and-vector	runnable
+

@@ -1,0 +1,18 @@
+#!/bin/sh
+set -eu
+
+repo_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+mlpl=${MLPL:-"$repo_root/../sw-mlpl/target/release/mlpl-repl"}
+
+"$repo_root/scripts/validate-problem-catalog"
+
+if [ ! -x "$mlpl" ]; then
+  echo "mlpl-repl is not executable: $mlpl" >&2
+  exit 1
+fi
+
+for demo in "$repo_root"/demos/problems/*.mlpl; do
+  echo "==> ${demo##*/}"
+  "$mlpl" --source-dir "$repo_root" "$demo"
+done
+

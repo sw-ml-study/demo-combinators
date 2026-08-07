@@ -1,0 +1,28 @@
+#!/bin/sh
+set -eu
+
+repo_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+catalog=${1:-"$repo_root/catalog/problems.tsv"}
+expected=$(printf 'id\tpath\ttest\tproblem\tbirds\tdata_shape\tstatus')
+
+if [ "$(sed -n '1p' "$catalog")" != "$expected" ]; then
+  echo "problem catalog header does not match the required schema" >&2
+  exit 1
+fi
+
+awk -F '\t' -v root="$repo_root" '
+  NR == 1 { next }
+  NF == 0 { next }
+  NF != 7 { printf "catalog line %d: expected 7 fields, found %d\n", NR, NF > "/dev/stderr"; bad = 1; next }
+  $1 !~ /^[a-z0-9][a-z0-9-]*$/ { printf "catalog line %d: invalid id\n", NR > "/dev/stderr"; bad = 1 }
+  seen[$1]++ { printf "catalog line %d: duplicate id %s\n", NR, $1 > "/dev/stderr"; bad = 1 }
+  index($2, "demos/problems/") != 1 || $2 !~ /[.]mlpl$/ { printf "catalog line %d: invalid demo path\n", NR > "/dev/stderr"; bad = 1 }
+  index($3, "tests/problems/") != 1 || $3 !~ /[.]mlpl$/ { printf "catalog line %d: invalid test path\n", NR > "/dev/stderr"; bad = 1 }
+  $4 == "" || $5 == "" || $6 == "" { printf "catalog line %d: problem metadata is required\n", NR > "/dev/stderr"; bad = 1 }
+  $7 != "runnable" && $7 != "planned" { printf "catalog line %d: invalid status\n", NR > "/dev/stderr"; bad = 1 }
+  $7 == "runnable" && system("test -f \"" root "/" $2 "\"") != 0 { printf "catalog line %d: demo missing\n", NR > "/dev/stderr"; bad = 1 }
+  $7 == "runnable" && system("test -f \"" root "/" $3 "\"") != 0 { printf "catalog line %d: test missing\n", NR > "/dev/stderr"; bad = 1 }
+  END { exit bad ? 1 : 0 }
+' "$catalog"
+
+echo "validated practical problem catalog"

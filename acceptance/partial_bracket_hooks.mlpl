@@ -1,0 +1,12 @@
+# FUTURE ACCEPTANCE FIXTURE: partial use/teardown hooks are part of the design
+# but are still rejected by the current bracket implementation.
+include "../src/birds.mlpl";
+
+def u:setup_five() { 5 }
+def u:use_with_offset(offset, fixture) { ok(offset + fixture) }
+def u:teardown_with_marker(marker, fixture) { marker + fixture; 1 }
+
+use10 = call(:u:use_with_offset, 10);
+teardown100 = call(:u:teardown_with_marker, 100);
+print(bracket(:u:setup_five, use10, teardown100))
+

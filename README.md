@@ -63,9 +63,23 @@ The next lessons use those partials to construct `I = S K K` and
 `not`/`and`/`or` using K and K I. This demonstrates representation and control
 through functions, not just convenient composition syntax.
 
+## Practical problems
+
+The conceptual aviary is paired with a demo-algorithms-style problem corpus.
+Each practical example has shared source, a standalone application, native
+tests, and catalog metadata. The first example computes regional order quotes:
+Bluebird composes discount and service-fee stages, a partial binds the tax
+rate, and Phoenix combines the two price branches for either one subtotal or a
+whole batch. [PLAN.md](PLAN.md) defines the selection rule and next problems.
+
 The maintenance rule remains feature-driven: add and test every bird
 expressible with the released interpreter, and promote a future contract as
 soon as its sw-MLPL semantics ship.
+
+Current HOF interoperability is deliberately reported precisely: partials
+work with `each`, `table`, `atop`, and `over`; Result combinators and `bracket`
+still reject them despite being included in the upstream design. Executable
+fixtures under `acceptance/` track those remaining gaps.
 
 Because partial application changes how every multi-argument definition can
 be observed, [the post-partial audit](docs/bird-audit.md) rechecks all 32
@@ -92,6 +106,7 @@ cargo build --manifest-path components/cli/Cargo.toml -p mlpl-repl --release
 cd ../demo-combinators
 ./scripts/run-demos
 ./scripts/run-lessons
+./scripts/run-problems
 ./scripts/run-tests
 ./scripts/check
 ```
@@ -104,9 +119,13 @@ the same shared `src/birds.mlpl` definitions as the demos.
 
 - `src/birds.mlpl` — reusable current bird definitions
 - `src/derived.mlpl` — SK derivations and combinatory Boolean values
+- `src/problems/` — reusable practical problem implementations
 - `demos/` — readable executable tours
+- `demos/problems/` — standalone problem-solving applications
 - `lessons/` — numbered path from identity through an array/ML pipeline
 - `tests/` — mlplunit conformance tests
+- `catalog/` — validated bird and practical-problem metadata
+- `acceptance/` — exact upstream feature gates excluded from green discovery
 - `docs/roadmap.md` — staged teaching and language roadmap
 - `docs/capability-matrix.md` — executable current/blocked feature boundary
 - `docs/notation.md` — canonical equations and argument-order policy

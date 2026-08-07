@@ -1,8 +1,8 @@
 # Bird-named combinators in the applicative style supported by sw-MLPL today.
 #
 # Each definition is named and contains no free variables. Function values are
-# explicit :u: references; call invokes them. Until progressive application is
-# implemented, callers must supply each bird's complete argument list.
+# explicit :u: references; call invokes them. Under-application produces a
+# callable partial value, so every multi-argument bird supports staged use.
 
 def u:idiot(x) { "I x = x (Identity)."; x }
 

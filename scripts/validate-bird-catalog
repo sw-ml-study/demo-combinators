@@ -1,0 +1,50 @@
+#!/bin/sh
+set -eu
+
+repo_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+catalog=${1:-"$repo_root/catalog/birds.tsv"}
+
+expected=$(printf 'symbol\tname\tfunction\tarity\tfamily\tequation\tsaturated_test\tstaged_test\tstatus')
+header=$(sed -n '1p' "$catalog")
+if [ "$header" != "$expected" ]; then
+  echo "bird catalog header does not match the required schema" >&2
+  exit 1
+fi
+
+awk -F '\t' -v root="$repo_root" '
+  NR == 1 { next }
+  NF != 9 { printf "catalog line %d: expected 9 fields, found %d\n", NR, NF > "/dev/stderr"; bad = 1; next }
+  $1 == "" || $2 == "" || $3 !~ /^[a-z][a-z0-9_]*$/ || $5 == "" || $6 == "" {
+    printf "catalog line %d: missing or invalid identity field\n", NR > "/dev/stderr"; bad = 1
+  }
+  $4 !~ /^[1-9][0-9]*$/ { printf "catalog line %d: arity must be positive\n", NR > "/dev/stderr"; bad = 1 }
+  seen_symbol[$1]++ { printf "catalog line %d: duplicate symbol %s\n", NR, $1 > "/dev/stderr"; bad = 1 }
+  seen_fn[$3]++ { printf "catalog line %d: duplicate function %s\n", NR, $3 > "/dev/stderr"; bad = 1 }
+  $9 != "current" { printf "catalog line %d: unsupported status %s\n", NR, $9 > "/dev/stderr"; bad = 1 }
+  system("test -f \"" root "/" $7 "\"") != 0 { printf "catalog line %d: saturated test missing\n", NR > "/dev/stderr"; bad = 1 }
+  $4 > 1 && ($8 == "-" || system("test -f \"" root "/" $8 "\"") != 0) {
+    printf "catalog line %d: multi-argument bird needs staged test\n", NR > "/dev/stderr"; bad = 1
+  }
+  $4 == 1 && $8 != "-" { printf "catalog line %d: unary bird staged test must be -\n", NR > "/dev/stderr"; bad = 1 }
+  { fn[NR] = $3; saturated[NR] = $7; staged[NR] = $8; arity[NR] = $4 }
+  END { exit bad ? 1 : 0 }
+' "$catalog"
+
+tab=$(printf '\t')
+while IFS="$tab" read -r symbol name fn arity family equation saturated staged status; do
+  [ "$symbol" = "symbol" ] && continue
+  if ! rg -F "def u:$fn(" "$repo_root/src/birds.mlpl" >/dev/null; then
+    echo "catalog function missing from src/birds.mlpl: $fn" >&2
+    exit 1
+  fi
+  if ! rg -F "u:$fn(" "$repo_root/$saturated" >/dev/null; then
+    echo "catalog function lacks saturated reference in $saturated: $fn" >&2
+    exit 1
+  fi
+  if [ "$staged" != "-" ] && ! rg -F ":u:$fn" "$repo_root/$staged" >/dev/null; then
+    echo "catalog function lacks staged reference in $staged: $fn" >&2
+    exit 1
+  fi
+done < "$catalog"
+
+echo "validated 32 cataloged birds"

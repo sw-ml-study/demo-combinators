@@ -16,6 +16,9 @@ of a bird.
 | Callable partial accepted by `call` | yes | staged bird tests |
 | Excess application continues left-associatively | yes | excess-application test |
 | Derive I as the callable value `S K K` | yes | SK-basis test and lesson 13 |
+| Partials in `each`, `table`, `atop`, `over` | yes | `tests/test_partial_hofs.mlpl` |
+| Partials in Result combinators | no | `acceptance/partial_result_hofs.mlpl` |
+| Partial `bracket` hooks | no | `acceptance/partial_bracket_hooks.mlpl` |
 
 ## Promotion rule
 

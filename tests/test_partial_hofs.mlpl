@@ -1,0 +1,13 @@
+include "src/birds.mlpl";
+
+@test {name: "partials compose with array HOFs", tags: ["partial", "hof", "arrays"]}
+def u:test_partial_array_hofs() { "Verify each, table, atop, and over accept appropriately saturated partial callables.";
+  add5 = call(:u:add, 5);
+  sum_from_10 = call(:u:sum3, 10);
+  u:assert_eq(each(add5, [1, 2, 3]), [6, 7, 8], "each accepts unary partial")?;
+  u:assert_eq(table(sum_from_10, [1, 2], [3, 4]), reshape([14, 15, 15, 16], [2, 2]), "table accepts binary partial")?;
+  u:assert_eq(atop(add5, :u:square, 3), 14, "atop accepts outer partial")?;
+  u:assert_eq(over(sum_from_10, :u:square, 3, 4), 35, "over accepts binary outer partial")
+}
+
+u:run_registered_tests()

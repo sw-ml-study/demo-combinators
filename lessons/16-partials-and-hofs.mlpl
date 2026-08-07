@@ -1,0 +1,16 @@
+# Partial values participate in the whole callable-aware HOF surface, not only
+# call(). Bind configuration once, then reuse the resulting callable.
+include "../src/birds.mlpl";
+
+add5 = call(:u:add, 5);
+sum_from_10 = call(:u:sum3, 10);
+
+print("each(add5, [1,2,3]):");
+print(each(add5, [1, 2, 3]));
+print("table(sum_from_10, [1,2], [3,4]):");
+print(table(sum_from_10, [1, 2], [3, 4]));
+print("atop(add5, square, 3):");
+print(atop(add5, :u:square, 3));
+print("over(sum_from_10, square, 3, 4):");
+print(over(sum_from_10, :u:square, 3, 4))
+

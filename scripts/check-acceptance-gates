@@ -1,0 +1,28 @@
+#!/bin/sh
+set -eu
+
+repo_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+mlpl=${MLPL:-"$repo_root/../sw-mlpl/target/release/mlpl-repl"}
+scratch=$(mktemp -d "${TMPDIR:-/tmp}/demo-combinators-gates.XXXXXX")
+trap 'rm -rf "$scratch"' EXIT HUP INT TERM
+
+check_gate() {
+  fixture=$1
+  expected=$2
+  output="$scratch/output.txt"
+  if "$mlpl" --source-dir "$repo_root" "$repo_root/$fixture" >"$output" 2>&1; then
+    echo "UNBLOCKED $fixture" >&2
+    echo "promote this fixture into the discovered suite" >&2
+    return 1
+  fi
+  if ! rg -F "$expected" "$output" >/dev/null; then
+    echo "CHANGED $fixture" >&2
+    sed -n '1,20p' "$output" >&2
+    return 1
+  fi
+  echo "GATED $fixture :: $expected"
+}
+
+check_gate acceptance/partial_result_hofs.mlpl "map_ok: first argument must be a function reference"
+check_gate acceptance/partial_bracket_hooks.mlpl 'bracket: use must be a `:u:name` user-function reference'
+

@@ -1,0 +1,18 @@
+# Problem: quote one or many order subtotals under a regional tax policy.
+#
+# Bluebird composes discount -> service fee. Partial application binds one tax
+# rate into a reusable callable. Phoenix forks each subtotal through the shared
+# price branch and configured tax branch, then Add combines their results.
+# Pervasive arithmetic makes the same wiring handle a scalar or batch vector.
+
+include "../../src/problems/order_quote.mlpl";
+
+single = u:regional_order_quote(100, 0.08);
+batch = u:regional_order_quote([100, 50, 200], 0.08);
+
+print("Single regional quote:");
+print(single);
+print("Batch totals with the same configured tax policy:");
+print(batch.total);
+batch
+

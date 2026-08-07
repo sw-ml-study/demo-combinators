@@ -1,0 +1,7 @@
+# FUTURE ACCEPTANCE FIXTURE: the combinators design says Result HOFs accept
+# partials, but the current evaluator still restricts them to raw references.
+include "../src/birds.mlpl";
+
+add5 = call(:u:add, 5);
+print(map_ok(add5, ok(3)))
+
