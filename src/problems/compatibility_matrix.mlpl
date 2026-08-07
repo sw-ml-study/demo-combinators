@@ -1,0 +1,20 @@
+# Practical problem: bind scoring configuration once, then form every
+# worker/job pairing through table's outer-product application.
+
+include "../birds.mlpl";
+
+def u:compatibility_score(base_score, gap_penalty, worker_skill, job_requirement) {
+  base_score - gap_penalty * abs(worker_skill - job_requirement)
+}
+
+def u:worker_job_compatibility(base_score, gap_penalty, worker_skills, job_requirements) {
+  "Return a worker-by-job score matrix using one configured binary partial.";
+  scorer = call(:u:compatibility_score, base_score, gap_penalty);
+  {
+    worker_skills: worker_skills,
+    job_requirements: job_requirements,
+    scorer: scorer,
+    scores: table(scorer, worker_skills, job_requirements)
+  }
+}
+

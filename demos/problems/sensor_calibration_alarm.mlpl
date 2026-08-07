@@ -1,0 +1,27 @@
+# Problem: apply sensor-specific calibration to current and baseline readings,
+# then flag channels whose calibrated deviation exceeds an alarm threshold.
+#
+# Partials bind calibration and threshold configuration. Psi applies the same
+# calibration to both inputs. Blackbird composes the binary deviation policy
+# into the alarm policy. One wiring handles scalars and channel vectors.
+
+include "../../src/problems/sensor_alarm.mlpl";
+
+report = u:sensor_alarm_report(
+  2,
+  1,
+  5,
+  [11, 18, 31],
+  [10, 20, 25]
+);
+
+print("Calibrated current readings:");
+print(report.calibrated_current);
+print("Calibrated baseline readings:");
+print(report.calibrated_baseline);
+print("Absolute calibrated deviations:");
+print(report.deviation);
+print("Alarm flags:");
+print(report.alarms);
+report
+

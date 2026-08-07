@@ -77,6 +77,10 @@ Bluebird composes discount and service-fee stages, a partial binds the tax
 rate, and Phoenix combines the two price branches for either one subtotal or a
 whole batch. [PLAN.md](PLAN.md) defines the selection rule and next problems.
 
+The corpus also includes configured sensor calibration/alarm scoring with Psi
+and Blackbird, plus a worker/job compatibility matrix built by passing a bound
+binary scoring policy directly to `table`.
+
 The maintenance rule remains feature-driven: add and test every bird
 expressible with the released interpreter, and promote a future contract as
 soon as its sw-MLPL semantics ship.

@@ -1,0 +1,31 @@
+# Practical problem: calibrate current and baseline sensor readings with one
+# configured callable, compare them through Psi, then classify deviations.
+
+include "../birds.mlpl";
+
+def u:calibrate_reading(scale, offset, reading) { reading * scale + offset }
+def u:absolute_difference(left, right) { abs(left - right) }
+def u:exceeds_threshold(threshold, value) { gt(value, threshold) }
+
+def u:calibrated_delta(calibrator, current, baseline) {
+  "Apply one calibration to both readings and combine them through Psi.";
+  call(:u:psi, :u:absolute_difference, calibrator, current, baseline)
+}
+
+def u:sensor_alarm_report(scale, offset, threshold, current, baseline) {
+  "Return calibrated deviation and alarm arrays for one configured sensor.";
+  calibrator = call(:u:calibrate_reading, scale, offset);
+  delta_policy = call(:u:calibrated_delta, calibrator);
+  alarm_policy = call(:u:exceeds_threshold, threshold);
+  deviation = call(delta_policy, current, baseline);
+  alarms = call(:u:blackbird, alarm_policy, delta_policy, current, baseline);
+  {
+    current: current,
+    baseline: baseline,
+    calibrated_current: call(calibrator, current),
+    calibrated_baseline: call(calibrator, baseline),
+    deviation: deviation,
+    alarms: alarms
+  }
+}
+

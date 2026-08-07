@@ -1,0 +1,18 @@
+# Problem: score every worker/job pairing from skill level and requirement.
+#
+# Partial application binds the scoring baseline and skill-gap penalty. `table`
+# then applies that configured binary callable across the Cartesian product,
+# producing a matrix without an explicit loop.
+
+include "../../src/problems/compatibility_matrix.mlpl";
+
+matrix = u:worker_job_compatibility(100, 10, [1, 3, 5], [2, 4]);
+
+print("Worker skill levels:");
+print(matrix.worker_skills);
+print("Job requirements:");
+print(matrix.job_requirements);
+print("Worker-by-job compatibility scores:");
+print(matrix.scores);
+matrix
+

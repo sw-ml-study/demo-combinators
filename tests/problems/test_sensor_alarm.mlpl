@@ -1,0 +1,21 @@
+include "src/problems/sensor_alarm.mlpl";
+
+@test {name: "configured sensor alarm scalar", tags: ["problem", "sensor", "birds", "partial"]}
+def u:test_sensor_alarm_scalar() { "Verify configured calibration, Psi comparison, and B1 classification for scalars.";
+  report = u:sensor_alarm_report(2, 1, 5, 11, 7);
+  u:assert_eq(report.calibrated_current, 23, "calibrated current")?;
+  u:assert_eq(report.calibrated_baseline, 15, "calibrated baseline")?;
+  u:assert_eq(report.deviation, 8, "calibrated deviation")?;
+  u:assert_eq(report.alarms, 1, "threshold alarm")
+}
+
+@test {name: "configured sensor alarm channels", tags: ["problem", "sensor", "birds", "arrays"]}
+def u:test_sensor_alarm_channels() { "Verify the same callable graph pervades channel vectors.";
+  report = u:sensor_alarm_report(2, 1, 5, [11, 18, 31], [10, 20, 25]);
+  u:assert_eq(report.calibrated_current, [23, 37, 63], "channel calibration")?;
+  u:assert_eq(report.deviation, [2, 4, 12], "channel deviations")?;
+  u:assert_eq(report.alarms, [0, 0, 1], "channel alarm flags")
+}
+
+u:run_registered_tests()
+

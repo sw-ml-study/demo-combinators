@@ -1,3 +1,4 @@
 id	path	test	problem	birds	data_shape	status
 regional-order-quote	demos/problems/regional_order_quote.mlpl	tests/problems/test_order_quote.mlpl	regional pricing with discount fee and configured tax	B+Phi+Partial	scalar-and-vector	runnable
-
+sensor-calibration-alarm	demos/problems/sensor_calibration_alarm.mlpl	tests/problems/test_sensor_alarm.mlpl	configured sensor calibration deviation and channel alarms	Psi+B1+Partial	scalar-and-vector	runnable
+worker-job-compatibility	demos/problems/worker_job_compatibility.mlpl	tests/problems/test_compatibility_matrix.mlpl	pairwise worker and job scoring with bound policy	table+Partial	matrix	runnable

@@ -1,0 +1,20 @@
+include "src/problems/compatibility_matrix.mlpl";
+
+@test {name: "configured worker job compatibility", tags: ["problem", "matching", "partial", "table"]}
+def u:test_compatibility_matrix() { "Verify a configured scorer forms the complete worker/job outer table.";
+  result = u:worker_job_compatibility(100, 10, [1, 3, 5], [2, 4]);
+  expected = reshape([90, 70, 90, 90, 70, 90], [3, 2]);
+  u:assert_eq(result.scores, expected, "pairwise compatibility matrix")?;
+  u:assert_eq(call(result.scorer, 3, 4), 90, "returned scorer remains callable")
+}
+
+@test {name: "compatibility policy substitution", tags: ["problem", "matching", "partial", "policy"]}
+def u:test_compatibility_policy() { "Verify changing bound policy changes scores without changing table wiring.";
+  strict = u:worker_job_compatibility(100, 20, [1, 3], [2]);
+  lenient = u:worker_job_compatibility(100, 5, [1, 3], [2]);
+  u:assert_eq(strict.scores, reshape([80, 80], [2, 1]), "strict gap penalty")?;
+  u:assert_eq(lenient.scores, reshape([95, 95], [2, 1]), "lenient gap penalty")
+}
+
+u:run_registered_tests()
+
