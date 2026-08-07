@@ -32,11 +32,45 @@ def u:starling(f, g, x) { "S f g x = f x (g x) (substitution).";
 
 def u:mockingbird(f) { "M f = f f (self-application)."; call(f, f) }
 
+# Composition-family birds lift B to functions with more inputs or stages.
+def u:blackbird(f, g, x, y) { "B1 f g x y = f (g x y).";
+  call(f, call(g, x, y))
+}
+
+def u:bunting(f, g, x, y, z) { "B2 f g x y z = f (g x y z).";
+  call(f, call(g, x, y, z))
+}
+
+def u:becard(f, g, h, x) { "B3 f g h x = f (g (h x)).";
+  call(f, call(g, call(h, x)))
+}
+
+# Birds that route one input through one or more functions.
+def u:dove(f, x, g, y) { "D f x g y = f x (g y).";
+  call(f, x, call(g, y))
+}
+
+def u:eagle(f, x, g, y, z) { "E f x g y z = f x (g y z).";
+  call(f, x, call(g, y, z))
+}
+
+def u:queer(f, g, x) { "Q f g x = g (f x).";
+  call(g, call(f, x))
+}
+
+def u:psi(f, g, x, y) { "Psi f g x y = f (g x) (g y).";
+  call(f, call(g, x), call(g, y))
+}
+
+def u:phoenix(f, g, h, x) { "Phi f g h x = f (g x) (h x).";
+  call(f, call(g, x), call(h, x))
+}
+
 # Small ordinary functions used to make the higher-order behavior visible.
 def u:increment(x) { x + 1 }
 def u:double(x) { x * 2 }
 def u:add(x, y) { x + y }
 def u:subtract(x, y) { x - y }
 def u:square(x) { x * x }
+def u:sum3(x, y, z) { x + y + z }
 def u:callable_kind(x) { if equal(x, :u:callable_kind) { 1 } else { 0 } }
-

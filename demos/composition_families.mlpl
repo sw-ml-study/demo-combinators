@@ -1,0 +1,20 @@
+# Birds are compact names for reusable wiring diagrams. These examples extend
+# ordinary composition to multi-argument functions and fork one array through
+# parallel transformations before combining the results.
+
+include "../src/birds.mlpl";
+
+print("Blackbird: square(add(2, 3))");
+print(u:blackbird(:u:square, :u:add, 2, 3));
+
+print("Bunting: double(sum3(2, 3, 4))");
+print(u:bunting(:u:double, :u:sum3, 2, 3, 4));
+
+print("Becard: increment(double(square(3)))");
+print(u:becard(:u:increment, :u:double, :u:square, 3));
+
+print("Psi: add(square(3), square(4))");
+print(u:psi(:u:add, :u:square, 3, 4));
+
+print("Phoenix: fork one vector through square and double, then add");
+print(u:phoenix(:u:add, :u:square, :u:double, [1, 2, 3]))

@@ -22,6 +22,11 @@ invocation with `call(f, args...)`. The executable aviary demonstrates:
 | Starling / S | `S f g x = f x (g x)` | substitution |
 | Mockingbird / M | `M f = f f` | self-application |
 
+The extended current suite also includes Blackbird (`B1`), Bunting (`B2`),
+Becard (`B3`), Dove (`D`), Eagle (`E`), Queer (`Q`), Psi (`Ψ`), and Phoenix
+(`Φ`). These exercise multi-argument composition, routing, mapping one
+function over two inputs, and forking one input through parallel stages.
+
 The Bluebird examples apply unchanged to scalars and arrays. That is the
 distinctly sw-MLPL lesson: combinators organize computations, while pervasive
 array operations organize data.

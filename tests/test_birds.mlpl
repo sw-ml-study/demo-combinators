@@ -23,5 +23,21 @@ def u:test_higher_order() { "Verify W, S, and M using explicit named function re
   u:assert_eq(u:mockingbird(:u:callable_kind), 1, "M passes a function its own reference")
 }
 
-u:run_registered_tests()
+@test {name: "extended composition family", tags: ["birds", "composition", "current"]}
+def u:test_composition_family() { "Verify Blackbird, Bunting, Becard, and Queer composition shapes.";
+  u:assert_eq(u:blackbird(:u:square, :u:add, 2, 3), 25, "B1 composes over a binary function")?;
+  u:assert_eq(u:bunting(:u:double, :u:sum3, 2, 3, 4), 18, "B2 composes over a ternary function")?;
+  u:assert_eq(u:becard(:u:increment, :u:double, :u:square, 3), 19, "B3 composes three unary stages")?;
+  u:assert_eq(u:queer(:u:double, :u:increment, 10), 21, "Q reverses B's function order")
+}
 
+@test {name: "fork and routing family", tags: ["birds", "routing", "arrays", "current"]}
+def u:test_routing_family() { "Verify Dove, Eagle, Psi, and Phoenix route values without closures.";
+  u:assert_eq(u:dove(:u:add, 10, :u:square, 3), 19, "D routes one transformed input")?;
+  u:assert_eq(u:eagle(:u:add, 10, :u:add, 3, 4), 17, "E routes a binary inner result")?;
+  u:assert_eq(u:psi(:u:add, :u:square, 3, 4), 25, "Psi maps one function over two inputs")?;
+  u:assert_eq(u:phoenix(:u:add, :u:square, :u:double, 3), 15, "Phi forks one input")?;
+  u:assert_eq(u:phoenix(:u:add, :u:square, :u:double, [1, 2, 3]), [3, 8, 15], "Phi forks arrays pervasively")
+}
+
+u:run_registered_tests()
