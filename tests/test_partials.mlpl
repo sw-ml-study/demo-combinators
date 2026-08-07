@@ -1,0 +1,52 @@
+include "src/birds.mlpl";
+
+@test {name: "staged bird application", tags: ["birds", "partial", "applicative"]}
+def u:test_staged_application() { "Verify under-application produces callable values that resume later.";
+  k5 = call(:u:kestrel, 5);
+  u:assert_eq(call(k5, 99), 5, "K x waits for y")?;
+
+  b_increment = call(:u:bluebird, :u:increment);
+  b_increment_double = call(b_increment, :u:double);
+  u:assert_eq(call(b_increment_double, [1, 2, 3]), [3, 5, 7], "B stages f then g then x")?;
+  u:assert_eq(
+    call(:u:bluebird, :u:increment, :u:double, [1, 2, 3]),
+    call(call(call(:u:bluebird, :u:increment), :u:double), [1, 2, 3]),
+    "one-shot and staged B agree"
+  )
+}
+
+@test {name: "left associative excess application", tags: ["birds", "partial", "applicative"]}
+def u:test_excess_application() { "Verify extra arguments continue onto a callable result.";
+  u:assert_eq(call(:u:kestrel, :u:idiot, 99, 7), 7, "((K I) 99) 7 applies I to 7")
+}
+
+@test {name: "SK basis derives identity", tags: ["birds", "partial", "derivation", "sk"]}
+def u:test_sk_identity() { "Verify the staged callable S K K behaves as I.";
+  sk = call(:u:starling, :u:kestrel);
+  skk = call(sk, :u:kestrel);
+  u:assert_eq(call(skk, [1, 2, 3]), [1, 2, 3], "S K K x = x")?;
+  u:assert_eq(
+    call(:u:starling, :u:kestrel, :u:kestrel, [4, 5]),
+    [4, 5],
+    "oversaturated S K K x = x"
+  )
+}
+
+@test {name: "partial values flow through data and HOFs", tags: ["birds", "partial", "storage", "arrays"]}
+def u:test_partial_values() { "Verify variables, records, function arguments, returns, and each accept partials.";
+  add5 = call(:u:add, 5);
+  registry = {transform: add5};
+  returned = u:idiot(registry.transform);
+  u:assert_eq(call(returned, 8), 13, "partial survives record, argument, and return flows")?;
+  u:assert_eq(each(add5, [1, 2, 3]), [6, 7, 8], "each accepts a unary partial")?;
+  u:assert_eq(equal(add5, call(:u:add, 5)), 1, "equivalent partial values are structurally equal")
+}
+
+@test {name: "mockingbird with identity terminates", tags: ["birds", "partial", "self-application"]}
+def u:test_mockingbird_identity() { "Verify M I reduces to I and remains callable.";
+  mi = call(:u:mockingbird, :u:idiot);
+  u:assert_eq(call(mi, 42), 42, "M I is extensionally I")
+}
+
+u:run_registered_tests()
+

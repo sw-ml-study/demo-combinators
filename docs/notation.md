@@ -24,3 +24,6 @@ The working catalog is checked against:
 Names can vary across extended catalogs. When adding a bird, record its symbol
 and full equation in the definition before adding derivations or aliases.
 
+ASCII identifiers and docstrings spell symbols such as `Sigma`, `Delta`,
+`Nu`, and `E-hat` where the MLPL source would otherwise need a Greek or
+accented function name. The README retains the conventional symbols.

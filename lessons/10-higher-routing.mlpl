@@ -1,0 +1,9 @@
+# Higher-arity birds are still available today because every nested call is
+# fully saturated. They stress callable dispatch without requiring closures.
+include "../src/birds.mlpl";
+print(u:violet_starling(:u:add, :u:square, 3));
+print(u:zebra_dove(:u:subtract, :u:square, 3, 4));
+print(u:dickcissel(:u:sum3, 10, 20, :u:square, 3));
+print(u:dovekie(:u:add, :u:square, 3, :u:double, 4));
+print(u:bald_eagle(:u:subtract, :u:add, 2, 3, :u:add, 4, 1))
+

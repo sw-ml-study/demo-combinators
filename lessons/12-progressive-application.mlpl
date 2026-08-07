@@ -1,0 +1,17 @@
+# Genuine birds are successively applicable values. A partial stores a named
+# function reference and bound data; it is not a lexical closure.
+include "../src/birds.mlpl";
+
+k5 = call(:u:kestrel, 5);
+print(repr(k5));
+print(call(k5, 99));
+
+b_increment = call(:u:bluebird, :u:increment);
+b_increment_double = call(b_increment, :u:double);
+print(repr(b_increment));
+print(repr(b_increment_double));
+print(call(b_increment_double, [1, 2, 3]));
+
+# Excess arguments continue left-associatively onto callable results.
+print(call(:u:kestrel, :u:idiot, 99, 7))
+

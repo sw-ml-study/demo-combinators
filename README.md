@@ -29,33 +29,38 @@ Goldfinch (`G`), Hummingbird (`H`), and Jay (`J`). These exercise
 multi-argument composition, routing, permutation, cancellation, shared
 mapping, forking, nested application, and self-application.
 
+The higher-arity tier adds Violet Starling (`Σ`), Zebra Dove (`Δ`),
+Dickcissel (`D1`), Dovekie (`D2`), Eastern and Western Nicator (`N`, `ν`),
+and Bald Eagle (`Ê`). Their complete-arity forms work today and provide useful
+stress coverage for nested calls spanning unary, binary, and ternary stages.
+
 The Bluebird examples apply unchanged to scalars and arrays. That is the
 distinctly sw-MLPL lesson: combinators organize computations, while pervasive
 array operations organize data.
 
-## The honest boundary
+## Progressive application has landed
 
-These definitions currently implement each equation as an ordinary named
-function with its full arity. They are not yet genuinely curried birds.
-`call(:u:kestrel, 5)` must eventually return a callable waiting for `y`, but
-the current interpreter reports an arity error.
+The sibling sw-MLPL build now supports callable partial values. Calling a user
+function with too few arguments returns a value that remembers the named
+reference and bound data; exact application executes it; excess arguments
+continue left-associatively onto callable results.
 
-[acceptance/progressive_application.mlpl](acceptance/progressive_application.mlpl)
-records the deliberately non-discovered acceptance case for:
+The green suite now verifies:
 
 1. under-application returning a callable partial value;
 2. calling that partial later; and
-3. excess arguments applying left-associatively to callable results.
+3. excess arguments applying left-associatively;
+4. partials flowing through variables, records, arguments, returns, and
+   callable-aware array higher-order functions; and
+5. the derived identity `S K K`.
 
-That minimal runtime feature is preferable to requiring anonymous lambdas or
-lexical closures: a partial only needs a named reference plus bound values.
-Once it lands, the repo can demonstrate derivation, SK completeness, and
-fixed-point birds faithfully.
+The implementation remains deliberately smaller than closures: a partial only
+needs a named reference plus bound values. Anonymous lambdas and captured
+lexical environments are not prerequisites for these demonstrations.
 
-The maintenance rule is simple: add and test every bird expressible with the
-released interpreter now; keep only genuinely blocked semantics in
-`acceptance/`; promote those fixtures into `tests/` as each sw-MLPL feature
-ships. The current suite never pretends that a failing future contract works.
+The maintenance rule remains feature-driven: add and test every bird
+expressible with the released interpreter, and promote a future contract as
+soon as its sw-MLPL semantics ship.
 
 ## Run it
 
@@ -78,7 +83,6 @@ cd ../demo-combinators
 ./scripts/run-demos
 ./scripts/run-lessons
 ./scripts/run-tests
-./scripts/check-acceptance-gates
 ./scripts/check
 ```
 
@@ -92,7 +96,6 @@ the same shared `src/birds.mlpl` definitions as the demos.
 - `demos/` — readable executable tours
 - `lessons/` — numbered path from identity through an array/ML pipeline
 - `tests/` — mlplunit conformance tests
-- `acceptance/` — future language-feature contracts, excluded from discovery
 - `docs/roadmap.md` — staged teaching and language roadmap
 - `docs/capability-matrix.md` — executable current/blocked feature boundary
 - `docs/notation.md` — canonical equations and argument-order policy

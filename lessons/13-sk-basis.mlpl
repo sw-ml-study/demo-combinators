@@ -1,0 +1,12 @@
+# S and K form a complete basis. The first concrete derivation is identity:
+# S K K x = K x (K x) = x.
+include "../src/birds.mlpl";
+
+sk = call(:u:starling, :u:kestrel);
+skk = call(sk, :u:kestrel);
+
+print(repr(sk));
+print(repr(skk));
+print(call(skk, [1, 2, 3]));
+print(call(:u:starling, :u:kestrel, :u:kestrel, [4, 5]))
+

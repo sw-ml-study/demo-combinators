@@ -14,21 +14,16 @@ New birds belong in this stage whenever their equations can be written and
 tested using exact-arity named functions and current callable references. Do
 not hold such birds behind the partial-application milestone.
 
-## Stage 2: genuine combinators (sw-MLPL prerequisite)
+## Stage 2: genuine combinators (current)
 
-Add a callable partial value containing a named callable, its arity, and bound
-arguments. Define `call` so under-application returns a partial, exact
-application executes, and excess arguments continue left-associatively over a
-callable result. Promote `acceptance/progressive_application.mlpl` to a native
-test when this ships.
+sw-MLPL now provides a callable partial value containing a named callable, its
+arity, and bound arguments. `call` returns a partial on under-application,
+executes at exact arity, and continues excess arguments left-associatively.
+The promoted native suite covers progressive B and K, storage flows, HOF use,
+excess application, Mockingbird with Identity, and the `S K K` derivation.
 
-Promotion is feature-driven: each newly passing acceptance case moves into
-the discovered test suite with its reusable definition and teaching demo.
-Still-failing cases remain explicit future contracts, never skipped tests in
-the green suite.
-
-Then teach progressive `K x`, `B f`, and `B f g` values; equivalence between
-one-shot and staged application; derived birds; and the `S` + `K` basis.
+Lessons 12 and 13 teach progressive `K x`, `B f`, and `B f g` values,
+equivalence between one-shot and staged application, and the `S` + `K` basis.
 
 ## Stage 3: an array-oriented functional toolkit
 

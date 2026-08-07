@@ -81,4 +81,15 @@ def u:test_duplicative_family() { "Verify Hummingbird and Jay repeat functions o
   u:assert_eq(u:jay(:u:subtract, 20, 3, 10), 13, "J repeats its function in a nested application")
 }
 
+@test {name: "higher arity routing family", tags: ["birds", "routing", "higher-arity", "current"]}
+def u:test_higher_arity_routing() { "Verify exact-arity nested dispatch through seven additional routing birds.";
+  u:assert_eq(u:violet_starling(:u:add, :u:square, 3), 12, "Sigma returns x beside g(x)")?;
+  u:assert_eq(u:zebra_dove(:u:subtract, :u:square, 3, 4), 5, "Delta routes y outside g")?;
+  u:assert_eq(u:dickcissel(:u:sum3, 10, 20, :u:square, 3), 39, "D1 transforms its final input")?;
+  u:assert_eq(u:dovekie(:u:add, :u:square, 3, :u:double, 4), 17, "D2 transforms two branches")?;
+  u:assert_eq(u:eastern_nicator(:u:add, 2, :u:add, 3), 7, "N repeats x inside its branch")?;
+  u:assert_eq(u:western_nicator(:u:subtract, :u:add, 2, 3), 2, "Nu repeats y outside its branch")?;
+  u:assert_eq(u:bald_eagle(:u:subtract, :u:add, 2, 3, :u:add, 4, 1), 0, "E-hat combines two binary branches")
+}
+
 u:run_registered_tests()

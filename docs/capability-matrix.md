@@ -12,15 +12,14 @@ of a bird.
 | Argument duplication and routing | yes | W, S, D, E, Psi, Phi |
 | Pervasive array behavior | yes | B and Phi vector tests |
 | Immediate composition | yes | `atop` comparison |
-| Under-application returns callable | no | `acceptance/progressive_application.mlpl` |
-| Callable partial accepted by `call` | no | `acceptance/progressive_application.mlpl` |
-| Excess application continues left-associatively | no | progressive-application fixture |
-| Derive I as the callable value `S K K` | no | `acceptance/sk_basis.mlpl` |
+| Under-application returns callable | yes | `tests/test_partials.mlpl` |
+| Callable partial accepted by `call` | yes | staged bird tests |
+| Excess application continues left-associatively | yes | excess-application test |
+| Derive I as the callable value `S K K` | yes | SK-basis test and lesson 13 |
 
 ## Promotion rule
 
 `tests/` must stay green on the released sibling sw-MLPL interpreter. A bird
-or equation that only needs current exact-arity calls belongs there now. An
-acceptance fixture moves into `tests/` only after its required language
-semantics ship; at that point its demo should emphasize the newly observable
-intermediate callable values.
+or equation whose semantics have shipped belongs there now. Newly unblocked
+features should emphasize observable intermediate callable values, not merely
+their final fully saturated results.

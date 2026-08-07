@@ -100,6 +100,36 @@ def u:jay(f, x, y, z) { "J f x y z = f x (f z y).";
   call(f, x, call(f, z, y))
 }
 
+# Higher-arity routing birds. These are valuable runtime stress cases because
+# they nest unary, binary, and ternary named calls while remaining exact-arity.
+def u:violet_starling(f, g, x) { "Sigma f g x = f (g x) x.";
+  call(f, call(g, x), x)
+}
+
+def u:zebra_dove(f, g, x, y) { "Delta f g x y = f (g x) y.";
+  call(f, call(g, x), y)
+}
+
+def u:dickcissel(f, x, y, g, z) { "D1 f x y g z = f x y (g z).";
+  call(f, x, y, call(g, z))
+}
+
+def u:dovekie(f, g, x, h, y) { "D2 f g x h y = f (g x) (h y).";
+  call(f, call(g, x), call(h, y))
+}
+
+def u:eastern_nicator(f, x, g, y) { "N f x g y = f x (g x y).";
+  call(f, x, call(g, x, y))
+}
+
+def u:western_nicator(f, g, x, y) { "Nu f g x y = f (g x y) y.";
+  call(f, call(g, x, y), y)
+}
+
+def u:bald_eagle(f, g, x, y, h, z, w) { "E-hat f g x y h z w = f (g x y) (h z w).";
+  call(f, call(g, x, y), call(h, z, w))
+}
+
 # Small ordinary functions used to make the higher-order behavior visible.
 def u:increment(x) { x + 1 }
 def u:double(x) { x * 2 }
