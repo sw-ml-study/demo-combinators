@@ -18,7 +18,7 @@ def u:cardinal(f, x, y) { "C f x y = f y x (flip).";
   call(f, y, x)
 }
 
-def u:vireo(f, x, y) { "V f x y = f x y (pairing/application).";
+def u:vireo(x, y, f) { "V x y f = f x y (pairing/application).";
   call(f, x, y)
 }
 
@@ -74,6 +74,30 @@ def u:lark(f, x) { "L f x = f (x x).";
 
 def u:owl(f, g) { "O f g = g (f g).";
   call(g, call(f, g))
+}
+
+# Canonical permutation and cancellation birds. Unlike sw-MLPL's function-
+# first HOF helpers, their argument order follows the standard bird equations.
+def u:kite(x, y) { "KI x y = y (second projection)."; y }
+
+def u:robin(x, f, y) { "R x f y = f y x.";
+  call(f, y, x)
+}
+
+def u:finch(x, y, f) { "F x y f = f y x.";
+  call(f, y, x)
+}
+
+def u:goldfinch(f, g, x, y) { "G f g x y = f y (g x).";
+  call(f, y, call(g, x))
+}
+
+def u:hummingbird(f, x, y) { "H f x y = f x y x.";
+  call(f, x, y, x)
+}
+
+def u:jay(f, x, y, z) { "J f x y z = f x (f z y).";
+  call(f, x, call(f, z, y))
 }
 
 # Small ordinary functions used to make the higher-order behavior visible.

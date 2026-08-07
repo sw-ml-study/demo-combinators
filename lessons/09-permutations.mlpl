@@ -1,0 +1,8 @@
+# Canonical bird order matters: V x y f, R x f y, and F x y f express three
+# different ways to place the same two values and binary function.
+include "../src/birds.mlpl";
+print(u:vireo(3, 10, :u:subtract));
+print(u:robin(3, :u:subtract, 10));
+print(u:finch(3, 10, :u:subtract));
+print(u:goldfinch(:u:subtract, :u:square, 3, 20))
+

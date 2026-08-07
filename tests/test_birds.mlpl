@@ -5,7 +5,7 @@ def u:test_foundations() { "Verify identity, constant, reverse application, pair
   u:assert_eq(u:idiot([1, 2, 3]), [1, 2, 3], "I preserves its argument")?;
   u:assert_eq(u:kestrel(5, 99), 5, "K retains its first argument")?;
   u:assert_eq(u:thrush(20, :u:increment), 21, "T reverses application")?;
-  u:assert_eq(u:vireo(:u:add, 8, 13), 21, "V applies a binary function")?;
+  u:assert_eq(u:vireo(8, 13, :u:add), 21, "V applies a binary function")?;
   u:assert_eq(u:cardinal(:u:subtract, 3, 10), 7, "C flips arguments")
 }
 
@@ -64,6 +64,21 @@ def u:test_nested_self_application() { "Verify Lark and Owl at full arity on cur
 def u:test_feature_pipeline() { "Verify a four-stage array transformation assembled with B and B3.";
   u:assert_eq(u:center_features([1, 2, 3]), [0 - 1, 0, 1], "centering stage")?;
   u:assert_eq(u:feature_pipeline([1, 2, 3]), [0, 0, 1], "composed feature classification")
+}
+
+@test {name: "canonical permutation family", tags: ["birds", "permutation", "current"]}
+def u:test_permutation_family() { "Verify canonical argument order for Kite, Robin, Finch, Vireo, and Goldfinch.";
+  u:assert_eq(u:kite(99, 5), 5, "KI selects its second argument")?;
+  u:assert_eq(u:robin(3, :u:subtract, 10), 7, "R rotates x f y into f y x")?;
+  u:assert_eq(u:finch(3, 10, :u:subtract), 7, "F reverses values before applying f")?;
+  u:assert_eq(u:vireo(3, 10, :u:subtract), 0 - 7, "V preserves value order before applying f")?;
+  u:assert_eq(u:goldfinch(:u:subtract, :u:square, 3, 20), 11, "G transforms x and routes it after y")
+}
+
+@test {name: "duplicative application family", tags: ["birds", "duplication", "current"]}
+def u:test_duplicative_family() { "Verify Hummingbird and Jay repeat functions or values in canonical positions.";
+  u:assert_eq(u:hummingbird(:u:sum3, 2, 5), 9, "H repeats its first value")?;
+  u:assert_eq(u:jay(:u:subtract, 20, 3, 10), 13, "J repeats its function in a nested application")
 }
 
 u:run_registered_tests()

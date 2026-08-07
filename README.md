@@ -17,15 +17,17 @@ invocation with `call(f, args...)`. The executable aviary demonstrates:
 | Thrush / T | `T x f = f x` | reverse application |
 | Bluebird / B | `B f g x = f (g x)` | composition |
 | Cardinal / C | `C f x y = f y x` | argument flip |
-| Vireo / V | `V f x y = f x y` | pairing/application |
+| Vireo / V | `V x y f = f x y` | pairing/application |
 | Warbler / W | `W f x = f x x` | duplication |
 | Starling / S | `S f g x = f x (g x)` | substitution |
 | Mockingbird / M | `M f = f f` | self-application |
 
 The extended current suite also includes Blackbird (`B1`), Bunting (`B2`),
 Becard (`B3`), Dove (`D`), Eagle (`E`), Queer (`Q`), Psi (`Ψ`), Phoenix
-(`Φ`), Lark (`L`), and Owl (`O`). These exercise multi-argument composition,
-routing, shared mapping, forking, nested application, and self-application.
+(`Φ`), Lark (`L`), Owl (`O`), Kite (`KI`), Robin (`R`), Finch (`F`),
+Goldfinch (`G`), Hummingbird (`H`), and Jay (`J`). These exercise
+multi-argument composition, routing, permutation, cancellation, shared
+mapping, forking, nested application, and self-application.
 
 The Bluebird examples apply unchanged to scalars and arrays. That is the
 distinctly sw-MLPL lesson: combinators organize computations, while pervasive
@@ -77,6 +79,7 @@ cd ../demo-combinators
 ./scripts/run-lessons
 ./scripts/run-tests
 ./scripts/check-acceptance-gates
+./scripts/check
 ```
 
 Override either tool path with `MLPL=/path/to/mlpl-repl` or
@@ -92,3 +95,4 @@ the same shared `src/birds.mlpl` definitions as the demos.
 - `acceptance/` — future language-feature contracts, excluded from discovery
 - `docs/roadmap.md` — staged teaching and language roadmap
 - `docs/capability-matrix.md` — executable current/blocked feature boundary
+- `docs/notation.md` — canonical equations and argument-order policy
