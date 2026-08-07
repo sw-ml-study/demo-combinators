@@ -1,0 +1,30 @@
+# A first tour through the sw-MLPL aviary.
+#
+# The same Bluebird composes scalar and array computations: the combinator
+# describes computation structure while sw-MLPL's pervasive arithmetic
+# describes data structure.
+
+include "../src/birds.mlpl";
+
+print("I: identity over an array");
+print(u:idiot([1, 2, 3]));
+
+print("K: retain the first value");
+print(u:kestrel(42, 999));
+
+print("T: send 20 through increment");
+print(u:thrush(20, :u:increment));
+
+print("B: increment after double, for a scalar and a vector");
+print(u:bluebird(:u:increment, :u:double, 10));
+print(u:bluebird(:u:increment, :u:double, [1, 2, 3]));
+
+print("C: flip subtraction's arguments");
+print(u:cardinal(:u:subtract, 3, 10));
+
+print("W and S: duplicate and share an argument");
+print(u:warbler(:u:add, 7));
+print(u:starling(:u:add, :u:square, 4));
+
+print("M: a function receives its own named reference");
+print(u:mockingbird(:u:callable_kind))

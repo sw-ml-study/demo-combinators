@@ -1,0 +1,27 @@
+include "src/birds.mlpl";
+
+@test {name: "foundational bird equations", tags: ["birds", "unit", "current"]}
+def u:test_foundations() { "Verify identity, constant, reverse application, pairing, and flip.";
+  u:assert_eq(u:idiot([1, 2, 3]), [1, 2, 3], "I preserves its argument")?;
+  u:assert_eq(u:kestrel(5, 99), 5, "K retains its first argument")?;
+  u:assert_eq(u:thrush(20, :u:increment), 21, "T reverses application")?;
+  u:assert_eq(u:vireo(:u:add, 8, 13), 21, "V applies a binary function")?;
+  u:assert_eq(u:cardinal(:u:subtract, 3, 10), 7, "C flips arguments")
+}
+
+@test {name: "composition is rank-polymorphic", tags: ["birds", "arrays", "composition"]}
+def u:test_bluebird() { "Verify B composes the same functions over scalar and array data.";
+  u:assert_eq(u:bluebird(:u:increment, :u:double, 10), 21, "B scalar composition")?;
+  u:assert_eq(u:bluebird(:u:increment, :u:double, [1, 2, 3]), [3, 5, 7], "B vector composition")?;
+  u:assert_eq(atop(:u:increment, :u:double, [1, 2, 3]), [3, 5, 7], "atop agrees with B")
+}
+
+@test {name: "duplication substitution and self application", tags: ["birds", "higher-order", "current"]}
+def u:test_higher_order() { "Verify W, S, and M using explicit named function references.";
+  u:assert_eq(u:warbler(:u:add, 7), 14, "W duplicates its argument")?;
+  u:assert_eq(u:starling(:u:add, :u:square, 4), 20, "S shares its argument")?;
+  u:assert_eq(u:mockingbird(:u:callable_kind), 1, "M passes a function its own reference")
+}
+
+u:run_registered_tests()
+

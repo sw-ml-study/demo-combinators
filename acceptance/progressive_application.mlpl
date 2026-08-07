@@ -1,0 +1,18 @@
+# FUTURE ACCEPTANCE FIXTURE -- intentionally excluded from mlplunit discovery.
+#
+# This is the semantic threshold between fixed-arity functions implementing
+# bird equations and genuine curried combinators. It should become runnable
+# once call supports callable partial values and left-associative excess
+# application. Today the first call fails with K's exact-arity diagnostic.
+
+include "../src/birds.mlpl";
+
+k5 = call(:u:kestrel, 5);
+print(call(k5, 99));
+
+b_inc = call(:u:bluebird, :u:increment);
+b_inc_double = call(b_inc, :u:double);
+print(call(b_inc_double, [1, 2, 3]));
+
+# Oversaturated application should mean ((K I) 99) 7 = 7.
+print(call(:u:kestrel, :u:idiot, 99, 7))

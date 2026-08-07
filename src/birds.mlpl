@@ -1,0 +1,42 @@
+# Bird-named combinators in the applicative style supported by sw-MLPL today.
+#
+# Each definition is named and contains no free variables. Function values are
+# explicit :u: references; call invokes them. Until progressive application is
+# implemented, callers must supply each bird's complete argument list.
+
+def u:idiot(x) { "I x = x (Identity)."; x }
+
+def u:kestrel(x, y) { "K x y = x (constant)."; x }
+
+def u:thrush(x, y) { "T x y = y x (reverse application)."; call(y, x) }
+
+def u:bluebird(f, g, x) { "B f g x = f (g x) (composition).";
+  call(f, call(g, x))
+}
+
+def u:cardinal(f, x, y) { "C f x y = f y x (flip).";
+  call(f, y, x)
+}
+
+def u:vireo(f, x, y) { "V f x y = f x y (pairing/application).";
+  call(f, x, y)
+}
+
+def u:warbler(f, x) { "W f x = f x x (duplication).";
+  call(f, x, x)
+}
+
+def u:starling(f, g, x) { "S f g x = f x (g x) (substitution).";
+  call(f, x, call(g, x))
+}
+
+def u:mockingbird(f) { "M f = f f (self-application)."; call(f, f) }
+
+# Small ordinary functions used to make the higher-order behavior visible.
+def u:increment(x) { x + 1 }
+def u:double(x) { x * 2 }
+def u:add(x, y) { x + y }
+def u:subtract(x, y) { x - y }
+def u:square(x) { x * x }
+def u:callable_kind(x) { if equal(x, :u:callable_kind) { 1 } else { 0 } }
+

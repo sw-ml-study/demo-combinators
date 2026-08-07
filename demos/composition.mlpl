@@ -1,0 +1,18 @@
+# Composition is useful outside the aviary: build a tiny array transformation
+# from reusable named stages. `atop(f, g, x)` is sw-MLPL's immediate form of
+# the Bluebird equation f(g(x)).
+
+include "../src/birds.mlpl";
+
+features = [1, 2, 3, 4];
+via_bird = u:bluebird(:u:increment, :u:double, features);
+via_atop = atop(:u:increment, :u:double, features);
+
+print("Input features:");
+print(features);
+print("increment(double(features)), via B:");
+print(via_bird);
+print("The same composition, via atop:");
+print(via_atop);
+print("Structurally equal:");
+print(equal(via_bird, via_atop))
