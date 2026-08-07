@@ -40,4 +40,18 @@ def u:test_routing_family() { "Verify Dove, Eagle, Psi, and Phoenix route values
   u:assert_eq(u:phoenix(:u:add, :u:square, :u:double, [1, 2, 3]), [3, 8, 15], "Phi forks arrays pervasively")
 }
 
+@test {name: "bird equations agree with derived forms", tags: ["birds", "derivation", "current"]}
+def u:test_derived_equations() { "Verify selected birds are equivalent wiring descriptions.";
+  u:assert_eq(
+    u:queer(:u:double, :u:increment, [1, 2, 3]),
+    u:bluebird(:u:increment, :u:double, [1, 2, 3]),
+    "Q f g agrees with B g f"
+  )?;
+  u:assert_eq(
+    u:phoenix(:u:add, :u:square, :u:double, [1, 2, 3]),
+    u:starling(:u:add_square_left, :u:double, [1, 2, 3]),
+    "Phi fork agrees with S when its left branch is packaged"
+  )
+}
+
 u:run_registered_tests()

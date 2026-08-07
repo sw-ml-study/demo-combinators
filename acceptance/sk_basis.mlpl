@@ -1,0 +1,16 @@
+# FUTURE ACCEPTANCE FIXTURE -- intentionally excluded from test discovery.
+#
+# In combinatory logic, S K K behaves as I. Demonstrating the derivation as
+# values requires partial application: S first receives K, then another K,
+# producing a unary callable. Full-arity S already works in the current suite;
+# these intermediate callable values are the blocked concept.
+
+include "../src/birds.mlpl";
+
+sk = call(:u:starling, :u:kestrel);
+skk = call(sk, :u:kestrel);
+print(call(skk, [1, 2, 3]));
+
+# One-shot excess application must agree with the staged form.
+print(call(:u:starling, :u:kestrel, :u:kestrel, [1, 2, 3]))
+

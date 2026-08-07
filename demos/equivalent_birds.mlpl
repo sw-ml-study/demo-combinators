@@ -1,0 +1,17 @@
+# Different birds can describe the same wiring after their function arguments
+# are rearranged. This is derivational reasoning that works today without
+# claiming the intermediate expressions are callable partials.
+
+include "../src/birds.mlpl";
+
+x = [1, 2, 3];
+q_result = u:queer(:u:double, :u:increment, x);
+b_result = u:bluebird(:u:increment, :u:double, x);
+
+print("Q double increment x:");
+print(q_result);
+print("B increment double x:");
+print(b_result);
+print("Q f g x = B g f x:");
+print(equal(q_result, b_result))
+

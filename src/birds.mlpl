@@ -73,4 +73,7 @@ def u:add(x, y) { x + y }
 def u:subtract(x, y) { x - y }
 def u:square(x) { x * x }
 def u:sum3(x, y, z) { x + y + z }
+# A named packaged outer stage used to compare equivalent bird wirings without
+# relying on closures or partial application.
+def u:add_square_left(x, y) { u:square(x) + y }
 def u:callable_kind(x) { if equal(x, :u:callable_kind) { 1 } else { 0 } }

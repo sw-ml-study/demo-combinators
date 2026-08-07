@@ -88,3 +88,4 @@ the same shared `src/birds.mlpl` definitions as the demos.
 - `tests/` — mlplunit conformance tests
 - `acceptance/` — future language-feature contracts, excluded from discovery
 - `docs/roadmap.md` — staged teaching and language roadmap
+- `docs/capability-matrix.md` — executable current/blocked feature boundary
