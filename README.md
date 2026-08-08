@@ -129,6 +129,20 @@ cd ../demo-combinators
 ./scripts/check
 ```
 
+The preferred developer interface is the root `justfile`; it delegates to the
+portable shell scripts above:
+
+```sh
+just check
+just test
+just demos
+just problems
+just lessons
+just catalogs
+```
+
+This project deliberately uses `just`, not Make or Makefiles.
+
 Override either tool path with `MLPL=/path/to/mlpl-repl` or
 `MLPLUNIT=/path/to/mlplunit`. Tests use mlplunit native `@test` discovery and
 the same shared `src/birds.mlpl` definitions as the demos.
