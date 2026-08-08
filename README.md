@@ -165,3 +165,9 @@ the same shared `src/birds.mlpl` definitions as the demos.
 - `docs/sage-fixed-points.md` — Y versus applicative Z and recursive examples
 - `docs/planned-follow-ons.md` — post-v0.1.0 practical and conceptual expansion
 - `docs/bird-audit.md` — canonical and staged review of the whole aviary
+
+## Copyright and license
+
+Copyright (c) 2026 Michael A Wright. See [COPYRIGHT](COPYRIGHT).
+
+This project is available under the [MIT License](LICENSE).
